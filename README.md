@@ -1,18 +1,20 @@
 - [path-ethic](#path-ethic)
-  - [Shell Commands](#shell-commands)
+  - [Commands](#commands)
     - [peth show](#peth-show)
     - [peth push \<path\>](#peth-push-path)
     - [peth append \<path\>](#peth-append-path)
     - [peth rm \<path\>](#peth-rm-path)
     - [peth reset](#peth-reset)
     - [peth commit](#peth-commit)
-  - [Installation](#installation)
+  - [How to Install](#how-to-install)
+  - [How to Uninstall](#how-to-uninstall)
+  - [Migrating Settings to Other Machines or Users](#migrating-settings-to-other-machines-or-users)
 
 # path-ethic
 `path-ethic` is simple [oh-my-zsh](https://github.com/ohmyzsh/ohmyzsh) plugin that helps you manage your `PATH` quickly and easily. Being ethic and all, this plugin won't touch your existing `.zshrc`, `.zprofile` or `.bash_profile`, but add on top of your existing environment.
 
 
-## Shell Commands
+## Commands
 ### peth show
 `peth show`   - displays the current value of `PATH` and the values of any set prefix and suffix.
 
@@ -82,27 +84,22 @@ effective ➤ /Users/code/go/bin/:/Users/code/.local/bin:/Users/code/.nvm/versio
    suffix ➤ /Users/code/projects
 ```
 
-## Installation
-1. Clone this repository or download [path-ethic.plugin.zsh](path-ethic.plugin.zsh) to your custom plugins directory.
-2. Enable the plugin by adding it to the list of loaded plugins in `~/.zshrc` as follows
+## How to Install
+1. Clone this repository to `$ZSH_CUSTOM/plugins/path-ethic`
+```bash
+mkdir -p "$ZSH_CUSTOM" && git clone git@github.com:sha1n/path-ethics.git "$ZSH_CUSTOM/plugins/path-ethic"
+```
+2. Enable the plugin by adding `path-ethic` to the plugin list `plugins=()` in `~/.zshrc` .
 ```bash 
 plugins=(
-  git
-  path-ethic      # <-- add this line
+  path-ethic      # <-- add this
 )
 ```
-3. Add a call to `load_path_ethic` at the end of your `~/.zshrc` (post any `PATH` export!)
 
-```bash
-...
+## How to Uninstall
+1. Reverse the [installation steps](#how-to-install).
+2. You may want to delete the file `~/.path-ethic`. This is where committed `PATH` elements are saved.
 
-export PATH=$HOME/.local/bin:$PATH
-export PATH=$PATH:/bin/there/done/that
-
-source $HOME/.exports
-
-...
-
-# load path-ethic 
-load_path_ethic    # <-- add this line
-```
+## Migrating Settings to Other Machines or Users
+1. [Install the plugin](#how-to-install)
+2. Copy `~/.path-ethic` to your other user home directory
