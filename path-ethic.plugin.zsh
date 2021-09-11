@@ -222,8 +222,6 @@ function load_path_ethic() {
     # remove the hook - it is only needed to run once per session
     add-zsh-hook -d precmd load_path_ethic
 
-    __pe_log "peth ➤ loading..."
-
     # Source previously committed environment
     if [[ -f "$env_file_path" ]]; then
         source "$env_file_path"
