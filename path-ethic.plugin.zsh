@@ -6,7 +6,7 @@ function __pe_strip_original_path() {
     local new_path=${PATH##"$PATH_ETHIC_HEAD"}
     new_path=${new_path%%"$PATH_ETHIC_TAIL"}
 
-    echo $new_path
+    echo $(__pe_normalize_path $new_path)
 }
 
 function __pe_rebuild_path_with() {
@@ -195,6 +195,6 @@ function load_path_ethic() {
     if [[ -f "$env_file_path" ]]; then
         source "$env_file_path"
 
-        export PATH="$PATH_ETHIC_HEAD$PATH$PATH_ETHIC_TAIL"
+        export PATH="$(__pe_rebuild_path_with $PATH)"
     fi
 }
