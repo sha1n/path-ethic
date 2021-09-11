@@ -189,8 +189,12 @@ function peth() {
 }
 
 # Loads user commited path prefix/suffix and re-exports the shell PATH.
-# This function needs to be caled post any .zshrc/.zprofile/.bash_profile PATH exports for the plugin to function properly.
 function load_path_ethic() {
+    # remove the hook - it is only needed to run once per session
+    add-zsh-hook -d precmd load_path_ethic
+
+    __pe_log "peth ➤ loading..."
+
     # Source previously committed environment
     if [[ -f "$env_file_path" ]]; then
         source "$env_file_path"
@@ -198,3 +202,7 @@ function load_path_ethic() {
         export PATH="$(__pe_rebuild_path_with $PATH)"
     fi
 }
+
+
+# register a pre-command hook to automatically load committed data before the first command is executed.
+add-zsh-hook precmd load_path_ethic
