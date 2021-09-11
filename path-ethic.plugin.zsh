@@ -1,3 +1,4 @@
+local script_dir=${0:a:h}
 local env_file_path="$HOME/.path-ethic"
 export PATH_ETHIC_TAIL=
 export PATH_ETHIC_HEAD=
@@ -142,7 +143,31 @@ Usage:
   peth rm <path>
   peth reset
   peth commit
+  peth update
 "
+}
+
+function __pe_self_update() {
+
+    if [[ ! -d "$script_dir/.git" ]]; then 
+        __pe_log_error "The plugin directory is not a git clone"
+        __pe_log_error "Update failed!"
+        
+        return;
+    fi
+    
+    if read -q "REPLY?Do you want to update 'path-ethic' to the latest version? [Y/n]: "; then
+        __pe_log "\nPulling latest changes from remote repository..."
+
+        if git -C "$script_dir" pull; then
+            __pe_log "Update successful!"
+        else 
+            __pe_log_error "Update failed!"
+        fi
+
+    else
+        __pe_log "\nUpdate cancelled"
+    fi    
 }
 
 function peth() {
@@ -177,6 +202,10 @@ function peth() {
             ;;
         show)
             __pe_show
+            return
+            ;;
+        update)
+            __pe_self_update
             return
             ;;
         *) # ignore unknown

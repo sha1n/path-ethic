@@ -6,6 +6,7 @@
     - [peth rm \<path\>](#peth-rm-path)
     - [peth reset](#peth-reset)
     - [peth commit](#peth-commit)
+    - [peth update](#peth-update)
   - [How to Install](#how-to-install)
   - [How to Uninstall](#how-to-uninstall)
   - [Migrating Settings to Other Machines or Users](#migrating-settings-to-other-machines-or-users)
@@ -83,6 +84,10 @@ effective ➤ /Users/code/go/bin/:/Users/code/.local/bin:/Users/code/.nvm/versio
    prefix ➤ /Users/code/go/bin/
    suffix ➤ /Users/code/projects
 ```
+
+### peth update
+`peth update` - if cloned from a remote git repository, prompts to pull the latest changes from that remote.
+
 
 ## How to Install
 1. Clone this repository to `$ZSH_CUSTOM/plugins/path-ethic`
