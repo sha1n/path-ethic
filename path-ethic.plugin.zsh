@@ -1,3 +1,6 @@
+# Ensure add-zsh-hook is loaded
+autoload -U add-zsh-hook
+
 local script_dir=${0:a:h}
 local env_file_path="$HOME/.path-ethic"
 export PATH_ETHIC_TAIL=
