@@ -5,18 +5,25 @@ EXIT_CODE=0
 
 run_tests() {
   
-  for test in $TESTS; do
-    print "Running test: $test..."
+  for test in $TESTS; 
+  do
+    echo $test
+    # printf "Running test: %s..." $test
+    
     ( eval zsh $test 2>&1 )
     local exitcode="$?"
-    [ "$exitcode" != "0" ] && EXIT_CODE=$exitcode
+
+    if [ "$exitcode" != "0" ]; then
+      EXIT_CODE=1
+      print "FAILED!\n"
+    else
+      print "PASSED!\n"
+    fi    
   done
 
   if [ "$EXIT_CODE" != "0" ]; then
-    print "FAILED!\n"
     exit $EXIT_CODE
   else
-    print "PASSED!\n"
     exit 0
   fi
 }

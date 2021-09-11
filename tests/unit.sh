@@ -2,6 +2,7 @@
 
 local script_dir=${0:a:h}
 local test_home=$(mktemp -d)
+local original_path="$PATH"
 
 unset PATH_ETHIC_HEAD
 unset PATH_ETHIC_TAIL
@@ -14,8 +15,16 @@ source $script_dir/../path-ethic.plugin.zsh
 
 ###############################################################################
 
+function unit_reset() {
+  export PATH_ETHIC_HEAD=""
+  export PATH_ETHIC_TAIL=""
+  export PATH="$original_path"
+}
+
 function header() {
   printf " > TESTING: %s...\n" $1
+  
+  unit_reset
 }
 
 function existing_dir_from() {
