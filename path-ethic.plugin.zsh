@@ -159,7 +159,7 @@ function __pe_self_update() {
     if read -q "REPLY?Do you want to update 'path-ethic' to the latest version? [Y/n]: "; then
         __pe_log "\nPulling latest changes from remote repository..."
 
-        if git -C "$script_dir" pull; then
+        if git -C "$script_dir" pull origin master; then
             __pe_log "Update successful!"
         else 
             __pe_log_error "Update failed!"
