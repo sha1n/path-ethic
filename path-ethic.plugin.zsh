@@ -48,17 +48,22 @@ function __pe_normalize_path() {
 }
 
 function __pe_log_error() {
-    print "$fg[red]ERROR:$reset_color $1" >&2
+    __pe_log "$fg[red]ERROR:$reset_color $1"
 }
 
 function __pe_log_warning() {
-    print "$fg[yellow]WARNING:$reset_color $1" >&2
+    __pe_log "$fg[yellow]WARNING:$reset_color $1"
 }
 
 function __pe_log() {
     print "$1" >&2
 }
 
+function __pe_is_directory() {
+    [ -d "$1" ]
+}
+
+# Removes any set prefix and suffix and re-exports PATH
 function __pe_reset() {
     local stripped_path=$(__pe_strip_original_path)
     export PATH_ETHIC_HEAD=
@@ -69,15 +74,13 @@ function __pe_reset() {
     __pe_show
 }
 
-function __pe_is_directory() {
-    [ -d "$1" ]
-}
-
+# Prepends the specified path element re-exports PATH
 function __pe_push() {
     export PATH_ETHIC_HEAD=$(__pe_normalize_path "$1:$PATH_ETHIC_HEAD")
     __pe_reexport_path
 }
 
+# Appends the specified path element re-exports PATH
 function __pe_append() {
     export PATH_ETHIC_TAIL=$(__pe_normalize_path "$PATH_ETHIC_TAIL:$1")
     __pe_reexport_path
@@ -125,6 +128,7 @@ function __pe_filter() {
     echo $(__pe_normalize_path "$out")
 }
 
+# Searches for the specified element in the current PATH and removes it if found
 function __pe_remove() {
     if [[ "$1" == "" ]]; then
         __pe_log_error "please provide a path to remove from PATH"
@@ -145,6 +149,7 @@ function __pe_remove() {
     __pe_show
 }
 
+# Shows the current path elements
 function __pe_show() {
     echo "effective ➤ $fg[magenta]$PATH$reset_color
    prefix ➤ $fg[green]$PATH_ETHIC_HEAD$reset_color
@@ -158,6 +163,7 @@ function __pe_commit() {
     __pe_show
 }
 
+# Prints usage message
 function __pe_usage() {
     __pe_log "
 Usage:
@@ -171,6 +177,7 @@ Usage:
 "
 }
 
+# Attempts to run self update
 function __pe_self_update() {
 
     if ! __pe_is_directory "$script_dir/.git"; then 
@@ -194,6 +201,7 @@ function __pe_self_update() {
     fi    
 }
 
+# Main command interpreter and dispatcher function
 function peth() {
     if [[ "$1" == "" ]]; then
         __pe_show

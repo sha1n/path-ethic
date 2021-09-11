@@ -9,7 +9,7 @@
     - [peth update](#peth-update)
   - [How to Install](#how-to-install)
   - [How to Uninstall](#how-to-uninstall)
-  - [Migrating Settings to Other Machines or Users](#migrating-settings-to-other-machines-or-users)
+  - [Migrating Commited Data](#migrating-commited-data)
 
 # path-ethic
 `path-ethic` is simple [oh-my-zsh](https://github.com/ohmyzsh/ohmyzsh) plugin that helps you manage your `PATH` quickly and easily. Being ethic and all, this plugin won't touch your existing `.zshrc`, `.zprofile` or `.bash_profile`, but add on top of your existing environment.
@@ -76,7 +76,10 @@ effective ➤ /Users/code/.local/bin:/Users/code/.nvm/versions/node/v16.3.0/bin:
 ```
 
 ### peth commit 
-`peth commit` - saves any pushed or appended elements for later reload (saved to `~/.path-ethic`).
+`peth commit` - saves any `PATH` edits for later sessions. 
+
+- Data is saved to `~/.path-ethic` 
+- User home paths are substituted with `$HOME` for better portability
 
 ```bash
 peth commit
@@ -105,6 +108,11 @@ plugins=(
 1. Reverse the [installation steps](#how-to-install).
 2. You may want to delete the file `~/.path-ethic`. This is where committed `PATH` elements are saved.
 
-## Migrating Settings to Other Machines or Users
+## Migrating Commited Data
+In order to make committed changes more portable, when changes are saved all user home paths are replaced with `$HOME`. 
+Therefore, when you migrate settings to a new machine or user, you can simply install the plugin, copy `path-ethic` dot file 
+and you should be good to go.
+
+**Steps:**
 1. [Install the plugin](#how-to-install)
 2. Copy `~/.path-ethic` to your other user home directory
