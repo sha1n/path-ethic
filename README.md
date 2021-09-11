@@ -1,3 +1,5 @@
+[![ci](https://github.com/sha1n/path-ethic/actions/workflows/ci.yml/badge.svg)](https://github.com/sha1n/path-ethic/actions/workflows/ci.yml)
+
 - [path-ethic](#path-ethic)
   - [Commands](#commands)
     - [peth show](#peth-show)
