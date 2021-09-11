@@ -152,8 +152,8 @@ function __pe_show() {
 }
 
 function __pe_commit() {
-    echo "export PATH_ETHIC_HEAD='$PATH_ETHIC_HEAD'" >$env_file_path
-    echo "export PATH_ETHIC_TAIL='$PATH_ETHIC_TAIL'" >>$env_file_path
+    echo "export PATH_ETHIC_HEAD=\"${PATH_ETHIC_HEAD/$HOME/\$HOME}\"" >$env_file_path
+    echo "export PATH_ETHIC_TAIL=\"${PATH_ETHIC_TAIL/$HOME/\$HOME}\"" >>$env_file_path
 
     __pe_show
 }
