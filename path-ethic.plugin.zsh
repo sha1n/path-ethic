@@ -32,11 +32,19 @@ function __pe_reexport_path() {
 }
 
 function __pe_normalize_path() {
-    local new_path="${1/::/:}"
-    local new_path="${new_path##:}"
-    new_path="${new_path%%:}"
+    local elements=("${(s/:/)1}")
+    local out=
 
-    echo $new_path
+    for e in "${elements[@]}"
+    do
+        if [[ "$out" == "" ]]; then
+            out="$e"
+        elif [[ "$e" != "" ]]; then
+            out="$out:$e"
+        fi
+    done
+    
+    echo $out
 }
 
 function __pe_log_error() {
@@ -61,29 +69,45 @@ function __pe_reset() {
     __pe_show
 }
 
-function __pe_push() {
-    if [[ "$1" == "" ]]; then
-        __pe_log_error "please provide a path to prepend to PATH"
-        return
-    fi
+function __pe_is_directory() {
+    [ -d "$1" ]
+}
 
+function __pe_push() {
     export PATH_ETHIC_HEAD=$(__pe_normalize_path "$1:$PATH_ETHIC_HEAD")
     __pe_reexport_path
-
-    __pe_show
 }
 
 function __pe_append() {
-    if [[ "$1" == "" ]]; then
+    export PATH_ETHIC_TAIL=$(__pe_normalize_path "$PATH_ETHIC_TAIL:$1")
+    __pe_reexport_path
+}
+
+function __pe_add_path_element() {
+    if [[ "$2" == "" ]]; then
         __pe_log_error "please provide a path to append to PATH"
         __pe_usage
         return
     fi
 
-    export PATH_ETHIC_TAIL=$(__pe_normalize_path "$PATH_ETHIC_TAIL:$1")
-    __pe_reexport_path
+    if __pe_is_directory $2 ; then 
+        if [[ "$1" == "push" ]]; then
+        
+            __pe_push "$2"
+        
+        elif [[ "$1" == "append" ]]; then
+        
+            __pe_append "$2"
+        
+        else
+            __pe_log_error "unsupported add command '$1'"
+        fi
 
-    __pe_show
+        __pe_show
+    
+    else
+        __pe_log_error "path '$2' doesn't exist"
+    fi
 }
 
 function __pe_filter() {
@@ -149,7 +173,7 @@ Usage:
 
 function __pe_self_update() {
 
-    if [[ ! -d "$script_dir/.git" ]]; then 
+    if ! __pe_is_directory "$script_dir/.git"; then 
         __pe_log_error "The plugin directory is not a git clone"
         __pe_log_error "Update failed!"
         
@@ -181,11 +205,11 @@ function peth() {
 
         case $command in
         push)
-            __pe_push "$2"
+            __pe_add_path_element "push" "$2"
             return
             ;;
         append)
-            __pe_append "$2"
+            __pe_add_path_element "append" "$2"
             return
             ;;
         rm)
