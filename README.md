@@ -32,51 +32,14 @@ effective ➤ /Users/code/go/bin//Users/code/.local/bin:/Users/code/.nvm/version
 ### peth push \<path\>
 `peth push`   - adds a new element at the beginning of the `PATH` and re-exports.
 
-```bash
-peth push /Users/code/go/bin/
-effective ➤ /Users/code/go/bin/:/Users/code/.local/bin:/Users/code/.nvm/versions/node/v16.3.0/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
-   prefix ➤ /Users/code/go/bin/
-   suffix ➤
-```
-
 ### peth append \<path\>
 `peth append` - adds a new element at the end of the `PATH` and re-exports.
  
-```bash
-peth append /Users/code/projects
-effective ➤ /Users/code/go/bin/:/Users/code/.local/bin:/Users/code/.nvm/versions/node/v16.3.0/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/code/projects
-   prefix ➤ /Users/code/go/bin/
-   suffix ➤ /Users/code/projects
-```
-
 ### peth rm \<path\>
 `peth rm` - removes a path element from the `PATH` and re-exports. If the removed element is a part of the normal user `PATH`, it is removed only in the current session even if the changes are committed.
-```bash
-peth show
-effective ➤ /Users/code/go/bin//Users/code/.local/bin:/Users/code/.nvm/versions/node/v16.3.0/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin/Users/code/projects
-   prefix ➤ /Users/code/go/bin/
-   suffix ➤ /Users/code/projects
-
-peth rm /Users/code/go/bin/
-effective ➤ /Users/code/.local/bin:/Users/code/.nvm/versions/node/v16.3.0/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/code/projects
-   prefix ➤
-   suffix ➤ /Users/code/projects
-
-peth rm /Users/code/projects
-effective ➤ /Users/code/.local/bin:/Users/code/.nvm/versions/node/v16.3.0/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
-   prefix ➤
-   suffix ➤
-```
 
 ### peth reset
 `peth reset` - removes all prefixes and suffixes and re-exports the original `PATH`.
-
-```bash
-peth reset
-effective ➤ /Users/code/.local/bin:/Users/code/.nvm/versions/node/v16.3.0/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
-   prefix ➤ 
-   suffix ➤ 
-```
 
 ### peth commit 
 `peth commit` - saves any `PATH` edits for later sessions. 
@@ -84,22 +47,8 @@ effective ➤ /Users/code/.local/bin:/Users/code/.nvm/versions/node/v16.3.0/bin:
 - Data is saved to `~/.path-ethic` 
 - User home paths are substituted with `$HOME` for better portability
 
-```bash
-peth commit
-effective ➤ /Users/code/go/bin/:/Users/code/.local/bin:/Users/code/.nvm/versions/node/v16.3.0/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/code/projects
-   prefix ➤ /Users/code/go/bin/
-   suffix ➤ /Users/code/projects
-```
-
 ### peth reload
 `peth reload` - reloads previously committed settings and discards any dirty state.
-
-```bash
-peth reload
-effective ➤ /Users/code/.local/bin:/Users/code/.nvm/versions/node/v16.3.0/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
-   prefix ➤ 
-   suffix ➤ 
-```
 
 ### peth update
 `peth update` - if cloned from a remote git repository, prompts to pull the latest changes from that remote.
