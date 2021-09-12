@@ -8,6 +8,7 @@
     - [peth rm \<path\>](#peth-rm-path)
     - [peth reset](#peth-reset)
     - [peth commit](#peth-commit)
+    - [peth reload](#peth-reload)
     - [peth update](#peth-update)
   - [How to Install](#how-to-install)
   - [How to Uninstall](#how-to-uninstall)
@@ -88,6 +89,16 @@ peth commit
 effective ➤ /Users/code/go/bin/:/Users/code/.local/bin:/Users/code/.nvm/versions/node/v16.3.0/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/code/projects
    prefix ➤ /Users/code/go/bin/
    suffix ➤ /Users/code/projects
+```
+
+### peth reload
+`peth reload` - reloads previously committed settings and discards any dirty state.
+
+```bash
+peth reload
+effective ➤ /Users/code/.local/bin:/Users/code/.nvm/versions/node/v16.3.0/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+   prefix ➤ 
+   suffix ➤ 
 ```
 
 ### peth update
