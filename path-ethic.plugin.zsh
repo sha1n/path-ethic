@@ -176,6 +176,7 @@ Usage:
   peth rm <path>
   peth reset
   peth commit
+  peth reload
   peth update
 "
 }
@@ -202,6 +203,18 @@ function __pe_self_update() {
     else
         __pe_log "\nUpdate cancelled"
     fi    
+}
+
+# Attempts to run self update
+function __pe_reload() {
+    local new_path=$(__pe_strip_original_path)
+
+    # Source previously committed environment
+    if [[ -f "$env_file_path" ]]; then
+        source "$env_file_path"
+
+        export PATH="$(__pe_rebuild_path_with $new_path)"
+    fi
 }
 
 # Main command interpreter and dispatcher function
@@ -235,6 +248,10 @@ function peth() {
             __pe_reset
             return
             ;;
+        reload)
+            __pe_reload
+            return
+            ;;
         show)
             __pe_show
             return
@@ -257,12 +274,7 @@ function load_path_ethic() {
     # remove the hook - it is only needed to run once per session
     add-zsh-hook -d precmd load_path_ethic
 
-    # Source previously committed environment
-    if [[ -f "$env_file_path" ]]; then
-        source "$env_file_path"
-
-        export PATH="$(__pe_rebuild_path_with $PATH)"
-    fi
+    __pe_reload
 }
 
 
