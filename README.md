@@ -12,7 +12,7 @@
     - [peth update](#peth-update)
   - [How to Install](#how-to-install)
   - [How to Uninstall](#how-to-uninstall)
-  - [Migrating Commited Data](#migrating-commited-data)
+  - [Migrating Committed Data](#migrating-committed-data)
 
 # path-ethic
 `path-ethic` is simple [oh-my-zsh](https://github.com/ohmyzsh/ohmyzsh) plugin that helps you manage your `PATH` quickly and easily. Being ethic and all, this plugin won't touch your existing `.zshrc`, `.zprofile` or `.bash_profile`, but add on top of your existing environment.
@@ -70,7 +70,7 @@ plugins=(
 1. Reverse the [installation steps](#how-to-install).
 2. You may want to delete the file `~/.path-ethic`. This is where committed `PATH` elements are saved.
 
-## Migrating Commited Data
+## Migrating Committed Data
 In order to make committed changes more portable, when changes are saved all user home paths are replaced with `$HOME`. 
 Therefore, when you migrate settings to a new machine or user, you can simply install the plugin, copy `path-ethic` dot file 
 and you should be good to go.
