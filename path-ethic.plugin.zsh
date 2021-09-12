@@ -73,8 +73,6 @@ function __pe_reset() {
     export PATH_ETHIC_TAIL=
 
     __pe_reexport_path "$stripped_path"
-
-    __pe_show
 }
 
 # Prepends the specified path element re-exports PATH
@@ -108,9 +106,6 @@ function __pe_add_path_element() {
         else
             __pe_log_error "unsupported add command '$1'"
         fi
-
-        __pe_show
-    
     else
         __pe_log_error "path '$2' doesn't exist"
     fi
@@ -148,8 +143,6 @@ function __pe_remove() {
     export PATH_ETHIC_TAIL=$(__pe_filter "$PATH_ETHIC_TAIL" "$find")
 
     __pe_reexport_path "$target_path"
-
-    __pe_show
 }
 
 # Shows the current path elements
@@ -162,8 +155,6 @@ function __pe_show() {
 function __pe_commit() {
     echo "export PATH_ETHIC_HEAD=\"${PATH_ETHIC_HEAD/$HOME/\$HOME}\"" >$env_file_path
     echo "export PATH_ETHIC_TAIL=\"${PATH_ETHIC_TAIL/$HOME/\$HOME}\"" >>$env_file_path
-
-    __pe_show
 }
 
 # Prints usage message
