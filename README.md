@@ -3,6 +3,7 @@
 - [path-ethic](#path-ethic)
   - [Commands](#commands)
     - [peth show](#peth-show)
+    - [peth list](#peth-list)
     - [peth push \<path\>](#peth-push-path)
     - [peth append \<path\>](#peth-append-path)
     - [peth rm \<path\>](#peth-rm-path)
@@ -24,9 +25,24 @@
 
 ```bash
 peth show # or just peth
-effective ➤ /Users/code/go/bin//Users/code/.local/bin:/Users/code/.nvm/versions/node/v16.3.0/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin/Users/code/projects
-   prefix ➤ /Users/code/go/bin/
+effective ➤ /Users/code/go/bin:/Users/code/.local/bin:/Users/code/.nvm/versions/node/v16.3.0/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin/Users/code/projects
+   prefix ➤ /Users/code/go/bin
    suffix ➤ /Users/code/projects
+```
+
+### peth list
+`peth list`   - similar to `show` but lists elements in separate lines.
+
+```bash
+peth list
+/Users/code/go/bin
+/Users/code/.local/bin
+/Users/code/.nvm/versions/node/v16.3.0/bin
+/usr/local/bin
+/usr/bin
+/bin
+/usr/sbin
+/sbin/Users/code/projects
 ```
 
 ### peth push \<path\>

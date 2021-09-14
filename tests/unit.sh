@@ -44,3 +44,14 @@ Actual: '$1'
     exit 1
   fi
 }
+
+function assert_not_empty() {
+  if [[ "$1" == "" ]]; then
+    print "EMPTY!
+
+Actual: '$1'
+"
+
+    exit 1
+  fi
+}

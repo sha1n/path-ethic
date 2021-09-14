@@ -30,6 +30,16 @@ assert_equals $PATH_ETHIC_HEAD "$committed_push_path"
 assert_equals $PATH_ETHIC_TAIL "$committed_append_path"
 assert_equals $PATH "$committed_push_path:$original_path:$committed_append_path"
 
+
+# peth list ##################################################################
+
+header "path list"
+
+local listed_path=$(peth list |  tr '\n' ':' | rev | cut -c2- | rev)
+
+assert_not_empty "$listed_path"
+assert_equals $listed_path $PATH
+
 # peth reset ##################################################################
 header "peth reset"
 
