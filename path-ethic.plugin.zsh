@@ -152,6 +152,29 @@ function __pe_show() {
    suffix ➤ $fg[blue]$PATH_ETHIC_TAIL$reset_color"
 }
 
+# Lists all path elements
+function __pe_list() {
+    if [[ "$PATH_ETHIC_HEAD" != "" ]]; then
+        for e in "${"${(s/:/)PATH_ETHIC_HEAD}"[@]}" 
+        do
+            echo "$fg[green]$e$reset_color"
+        done
+    fi
+    
+    local orig=$(__pe_strip_original_path)
+    for e in "${"${(s/:/)orig}"[@]}" 
+    do
+        echo "$e"
+    done
+
+    if [[ "$PATH_ETHIC_TAIL" != "" ]]; then
+        for e in "${"${(s/:/)PATH_ETHIC_TAIL}"[@]}" 
+        do
+            echo "$fg[blue]$e$reset_color"
+        done
+    fi
+}
+
 function __pe_commit() {
     echo "export PATH_ETHIC_HEAD=\"${PATH_ETHIC_HEAD/$HOME/\$HOME}\"" >$env_file_path
     echo "export PATH_ETHIC_TAIL=\"${PATH_ETHIC_TAIL/$HOME/\$HOME}\"" >>$env_file_path
@@ -162,6 +185,7 @@ function __pe_usage() {
     __pe_log "
 Usage:
   peth [show]
+  peth list
   peth push <path>
   peth append <path>
   peth rm <path>
@@ -245,6 +269,10 @@ function peth() {
             ;;
         show)
             __pe_show
+            return
+            ;;
+        list)
+            __pe_list
             return
             ;;
         update)
