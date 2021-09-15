@@ -90,7 +90,7 @@ function __pe_append() {
 function __pe_add_path_element() {
     if [[ "$2" == "" ]]; then
         __pe_log_error "please provide a path to append to PATH"
-        __pe_usage
+        __pe_help
         return
     fi
 
@@ -130,7 +130,7 @@ function __pe_filter() {
 function __pe_remove() {
     if [[ "$1" == "" ]]; then
         __pe_log_error "please provide a path to remove from PATH"
-        __pe_usage
+        __pe_help
         return
     fi
 
@@ -180,20 +180,30 @@ function __pe_commit() {
     echo "export PATH_ETHIC_TAIL=\"${PATH_ETHIC_TAIL/$HOME/\$HOME}\"" >>$env_file_path
 }
 
-# Prints usage message
-function __pe_usage() {
-    __pe_log "
-Usage:
-  peth [show]
-  peth list
-  peth push <path>
-  peth append <path>
-  peth rm <path>
-  peth flip
-  peth reset
-  peth commit
-  peth reload
-  peth update
+# Prints help message
+function __pe_help() {
+    __pe_log "Usage: 
+  peth [command] 
+  peth command [arguments]
+
+
+Available Command: 
+
+  peth [show]        - shows the effective PATH and your current session settings
+  peth list          - lists all effective PATH elements in the current session
+  peth push <path>   - pushs an element to the begining of the current session PATH
+  peth append <path> - appends an element to the end of the current session PATH
+  peth rm <path>     - finds and removes an element from the session PATH
+  peth flip          - flips the order of your set prefix and suffix in the current session
+  peth reset         - strips any set prefix and suffix from the current session PATH
+  peth commit        - commits the current session settings to disk for later recall
+  peth reload        - reloads any committed settings and overwrites the current session
+  peth update        - updates the plugin from github
+  peth help          - displays this help message
+
+
+  path-ethic github: https://github.com/sha1n/path-ethic
+   Oh-My-Zsh github: https://github.com/ohmyzsh/ohmyzsh
 "
 }
 
@@ -295,9 +305,13 @@ function peth() {
             __pe_self_update
             return
             ;;
+        help)
+            __pe_help
+            return
+            ;;
         *) # ignore unknown
             __pe_log_error "unsupported command: '$@'"
-            __pe_usage
+            __pe_help
             return
             ;;
         esac
