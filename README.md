@@ -4,10 +4,10 @@
   - [CLI Commands](#cli-commands)
     - [peth list](#peth-list)
     - [peth show](#peth-show)
-    - [peth push \<path\>](#peth-push-path)
-    - [peth append \<path\>](#peth-append-path)
+    - [peth push](#peth-push)
+    - [peth append](#peth-append)
     - [peth flip](#peth-flip)
-    - [peth rm \<path\>](#peth-rm-path)
+    - [peth rm](#peth-rm)
     - [peth reset](#peth-reset)
     - [peth commit](#peth-commit)
     - [peth reload](#peth-reload)
@@ -23,34 +23,34 @@
 
 ## CLI Commands
 ### peth list
-`peth list`   - similar to `show` but lists elements in separate lines.
+`peth list` - similar to `show` but lists elements in separate lines.
 
 <img src="docs/images/peth-list.png" width="100%">
 
 ### peth show
-`peth show`   - displays the current value of `PATH` and the values of any set prefix and suffix.
+`peth show` - displays the current value of `PATH` and the values of any set prefix and suffix.
 
 <img src="docs/images/peth-show.png" width="100%">
 
-### peth push \<path\>
-`peth push`   - adds a new element at the beginning of the `PATH` and re-exports.
+### peth push
+`peth push <path>` - adds a new element at the beginning of the `PATH` and re-exports.
 
-### peth append \<path\>
-`peth append` - adds a new element at the end of the `PATH` and re-exports.
+### peth append
+`peth append <path>` - adds a new element at the end of the `PATH` and re-exports.
  
 ### peth flip
-`peth flip`   - flips the prefix and suffix to reverse their priority. This is a very handy feature if often need to switch between different verisons of the same software.
+`peth flip` - flips the prefix and suffix to reverse their priority. This is a very handy feature if often need to switch between different verisons of the same software.
 
 <details>
   <summary>Demo</summary>
   <img src="docs/images/peth-flip-demo.gif" width="100%">
 </details>
 
-### peth rm \<path\>
-`peth rm`     - removes a path element from the `PATH` and re-exports. If the removed element is a part of the normal user `PATH`, it is removed only in the current session even if the changes are committed. If you want to edit the `PATH` variable, use the plugin and when you're happy copy the effective path value from the output of `peth show` and export it from your `.zshrc` or wherever you manage exports.
+### peth rm
+`peth rm <path>` - removes a path element from the `PATH` and re-exports. If the removed element is a part of the normal user `PATH`, it is removed only in the current session even if the changes are committed. If you want to edit the `PATH` variable, use the plugin and when you're happy copy the effective path value from the output of `peth show` and export it from your `.zshrc` or wherever you manage exports.
 
 ### peth reset
-`peth reset`  - removes all prefixes and suffixes and re-exports the original `PATH`.
+`peth reset` - removes all prefixes and suffixes and re-exports the original `PATH`.
 
 ### peth commit 
 `peth commit` - saves any `PATH` edits for later sessions. 
