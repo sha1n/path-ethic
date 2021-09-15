@@ -202,8 +202,8 @@ Available Command:
   peth help          - displays this help message
 
 
-  path-ethic github: https://github.com/sha1n/path-ethic
-   Oh-My-Zsh github: https://github.com/ohmyzsh/ohmyzsh
+ path-ethic on Github: https://github.com/sha1n/path-ethic
+  Oh-My-Zsh on Github: https://github.com/ohmyzsh/ohmyzsh
 "
 }
 
