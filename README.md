@@ -59,7 +59,6 @@ peth list
   <summary>Demo</summary>
   <img src="docs/images/peth-flip-demo.gif" width="100%">
 </details>
-<br>
 
 ### peth rm \<path\>
 `peth rm` - removes a path element from the `PATH` and re-exports. If the removed element is a part of the normal user `PATH`, it is removed only in the current session even if the changes are committed.
