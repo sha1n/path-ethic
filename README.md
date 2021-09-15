@@ -1,9 +1,9 @@
 [![ci](https://github.com/sha1n/path-ethic/actions/workflows/ci.yml/badge.svg)](https://github.com/sha1n/path-ethic/actions/workflows/ci.yml)
 
 - [path-ethic](#path-ethic)
-  - [Commands](#commands)
-    - [peth show](#peth-show)
+  - [CLI Commands](#cli-commands)
     - [peth list](#peth-list)
+    - [peth show](#peth-show)
     - [peth push \<path\>](#peth-push-path)
     - [peth append \<path\>](#peth-append-path)
     - [peth flip](#peth-flip)
@@ -12,39 +12,25 @@
     - [peth commit](#peth-commit)
     - [peth reload](#peth-reload)
     - [peth update](#peth-update)
+    - [peth help](#peth-help)
   - [How to Install](#how-to-install)
   - [How to Uninstall](#how-to-uninstall)
   - [Migrating Committed Data](#migrating-committed-data)
 
 # path-ethic
-`path-ethic` is simple [oh-my-zsh](https://github.com/ohmyzsh/ohmyzsh) plugin that helps you manage your `PATH` quickly and easily. Being ethic and all, this plugin won't touch your existing `.zshrc`, `.zprofile` or `.bash_profile`, but add on top of your existing environment.
+`path-ethic` is simple native [oh-my-zsh](https://github.com/ohmyzsh/ohmyzsh) plugin that provides a CLI for `PATH` manipulations. It won't touch your existing `.zshrc`, `.zprofile` or any other shell environment configuration, but add on top of your existing environment.
 
 
-## Commands
-### peth show
-`peth show`   - displays the current value of `PATH` and the values of any set prefix and suffix.
-
-```bash
-peth show # or just peth
-effective ➤ /Users/code/go/bin:/Users/code/.local/bin:/Users/code/.nvm/versions/node/v16.3.0/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin/Users/code/projects
-   prefix ➤ /Users/code/go/bin
-   suffix ➤ /Users/code/projects
-```
-
+## CLI Commands
 ### peth list
 `peth list`   - similar to `show` but lists elements in separate lines.
 
-```bash
-peth list
-/Users/code/go/bin
-/Users/code/.local/bin
-/Users/code/.nvm/versions/node/v16.3.0/bin
-/usr/local/bin
-/usr/bin
-/bin
-/usr/sbin
-/sbin/Users/code/projects
-```
+<img src="docs/images/peth-list.png" width="100%">
+
+### peth show
+`peth show`   - displays the current value of `PATH` and the values of any set prefix and suffix.
+
+<img src="docs/images/peth-show.png" width="100%">
 
 ### peth push \<path\>
 `peth push`   - adds a new element at the beginning of the `PATH` and re-exports.
@@ -53,7 +39,7 @@ peth list
 `peth append` - adds a new element at the end of the `PATH` and re-exports.
  
 ### peth flip
-`peth flip` - flips the prefix and suffix to reverse their priority. This is a very handy feature if often need to switch between different verisons of the same software.
+`peth flip`   - flips the prefix and suffix to reverse their priority. This is a very handy feature if often need to switch between different verisons of the same software.
 
 <details>
   <summary>Demo</summary>
@@ -61,10 +47,10 @@ peth list
 </details>
 
 ### peth rm \<path\>
-`peth rm` - removes a path element from the `PATH` and re-exports. If the removed element is a part of the normal user `PATH`, it is removed only in the current session even if the changes are committed.
+`peth rm`     - removes a path element from the `PATH` and re-exports. If the removed element is a part of the normal user `PATH`, it is removed only in the current session even if the changes are committed. If you want to edit the `PATH` variable, use the plugin and when you're happy copy the effective path value from the output of `peth show` and export it from your `.zshrc` or wherever you manage exports.
 
 ### peth reset
-`peth reset` - removes all prefixes and suffixes and re-exports the original `PATH`.
+`peth reset`  - removes all prefixes and suffixes and re-exports the original `PATH`.
 
 ### peth commit 
 `peth commit` - saves any `PATH` edits for later sessions. 
@@ -77,6 +63,9 @@ peth list
 
 ### peth update
 `peth update` - if cloned from a remote git repository, prompts to pull the latest changes from that remote.
+
+### peth help
+`peth help`   - displays a help.
 
 
 ## How to Install
@@ -96,8 +85,8 @@ plugins=(
 2. You may want to delete the file `~/.path-ethic`. This is where committed `PATH` elements are saved.
 
 ## Migrating Committed Data
-In order to make committed changes more portable, when changes are saved all user home paths are replaced with `$HOME`. 
-Therefore, when you migrate settings to a new machine or user, you can simply install the plugin, copy `path-ethic` dot file 
+In order to make committed changes more portable, right before changes are saved all user home paths are replaced with `$HOME`. 
+Therefore, when you migrate settings to a new computer or user on the same computer, you can simply install the plugin, copy `path-ethic` dot file 
 and you should be good to go.
 
 **Steps:**
