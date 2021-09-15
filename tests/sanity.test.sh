@@ -43,10 +43,10 @@ assert_equals $listed_path $PATH
 # peth reset ##################################################################
 header "peth reset"
 
-peth push $push_path >/dev/null
-peth append $append_path >/dev/null
+peth push $push_path
+peth append $append_path
 
-peth reset >/dev/null
+peth reset
 
 assert_equals $PATH_ETHIC_HEAD ""
 assert_equals $PATH_ETHIC_TAIL ""
@@ -55,7 +55,7 @@ assert_equals $PATH $original_path
 # peth push ###################################################################
 header "peth push"
 
-peth push $push_path >/dev/null
+peth push $push_path
 
 assert_equals $PATH_ETHIC_HEAD $push_path
 assert_equals $PATH_ETHIC_TAIL ""
@@ -63,19 +63,31 @@ assert_equals $PATH_ETHIC_TAIL ""
 # peth append #################################################################
 header "peth append"
 
-peth append $append_path >/dev/null
+peth append $append_path
 
 assert_equals $PATH_ETHIC_TAIL $append_path
 assert_equals $PATH_ETHIC_HEAD ""
 
+# peth flip #####################################################################
+header "peth flip"
+
+peth push $push_path
+peth append $append_path
+
+peth flip
+
+assert_equals $PATH_ETHIC_HEAD $append_path
+assert_equals $PATH_ETHIC_TAIL $push_path
+assert_equals $PATH $append_path:$original_path:$push_path
+
 # peth rm #####################################################################
 header "peth rm"
 
-peth push $push_path >/dev/null
-peth append $append_path >/dev/null
+peth push $push_path
+peth append $append_path
 
-peth rm $push_path >/dev/null
-peth rm $append_path >/dev/null
+peth rm $push_path
+peth rm $append_path
 
 assert_equals $PATH_ETHIC_HEAD ""
 assert_equals $PATH_ETHIC_TAIL ""
@@ -84,8 +96,8 @@ assert_equals $PATH $original_path
 # peth reload #################################################################
 header "peth reload"
 
-peth push $push_path >/dev/null
-peth append $append_path >/dev/null
+peth push $push_path
+peth append $append_path
 
 peth reload
 
@@ -96,7 +108,7 @@ assert_equals $PATH $committed_push_path:$original_path:$committed_append_path
 # peth commit #################################################################
 header "peth commit empty"
 
-peth commit >/dev/null
+peth commit
 
 load_path_ethic
 
@@ -106,10 +118,10 @@ assert_equals $PATH $original_path
 
 header "peth commit non-empty"
 
-peth push $push_path >/dev/null
-peth append $append_path >/dev/null
+peth push $push_path
+peth append $append_path
 
-peth commit >/dev/null
+peth commit
 
 unit_reset
 load_path_ethic

@@ -189,6 +189,7 @@ Usage:
   peth push <path>
   peth append <path>
   peth rm <path>
+  peth flip
   peth reset
   peth commit
   peth reload
@@ -232,6 +233,17 @@ function __pe_reload() {
     fi
 }
 
+# Flips the prefix and suffix to change elements priority
+function __pe_flip() {
+    PATH=$(__pe_strip_original_path)
+    
+    local tmp=$PATH_ETHIC_HEAD
+    PATH_ETHIC_HEAD=$PATH_ETHIC_TAIL
+    PATH_ETHIC_TAIL=$tmp
+
+    __pe_reexport_path
+}
+
 # Main command interpreter and dispatcher function
 function peth() {
     if [[ "$1" == "" ]]; then
@@ -273,6 +285,10 @@ function peth() {
             ;;
         list)
             __pe_list
+            return
+            ;;
+        flip)
+            __pe_flip
             return
             ;;
         update)
