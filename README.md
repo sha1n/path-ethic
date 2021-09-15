@@ -6,6 +6,7 @@
     - [peth list](#peth-list)
     - [peth push \<path\>](#peth-push-path)
     - [peth append \<path\>](#peth-append-path)
+    - [peth flip](#peth-flip)
     - [peth rm \<path\>](#peth-rm-path)
     - [peth reset](#peth-reset)
     - [peth commit](#peth-commit)
@@ -51,6 +52,14 @@ peth list
 ### peth append \<path\>
 `peth append` - adds a new element at the end of the `PATH` and re-exports.
  
+### peth flip
+`peth flip` - flips the prefix and suffix to reverse their priority. This is a very handy feature if often need to switch between different verisons of the same software.
+
+<details>
+  <summary>Demo</summary>
+  <img src="docs/images/peth-flip-demo.gif" width="100%">
+</details>
+
 ### peth rm \<path\>
 `peth rm` - removes a path element from the `PATH` and re-exports. If the removed element is a part of the normal user `PATH`, it is removed only in the current session even if the changes are committed.
 
