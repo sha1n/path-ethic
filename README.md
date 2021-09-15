@@ -65,7 +65,7 @@
 `peth update` - if cloned from a remote git repository, prompts to pull the latest changes from that remote.
 
 ### peth help
-`peth help`   - displays a help.
+`peth help` - displays help.
 
 
 ## How to Install
