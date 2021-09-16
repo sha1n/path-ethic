@@ -3,5 +3,5 @@ theme: jekyll-theme-cayman
 plugins:
   - jekyll-sitemap
 
-title: bert
-description: a CLI benchmarking tool that allows you to collect performance stats for any number of commands, label and save them in several file formats for further analysis and display
+title: path-ethic
+description: An oh-my-zsh path manipulation utility plugin
