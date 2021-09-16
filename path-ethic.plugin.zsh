@@ -150,10 +150,11 @@ function load_path_ethic() {
         local new_path=$(__pe_strip_original_path)
         source "$HOME/.path-ethic"
         export PATH="$(__pe_rebuild_path_with $new_path)"
-
-        __pe_save
-
+        
         rm "$HOME/.path-ethic"
+        mkdir -p "$PATH_ETHIC_HOME"
+
+        __pe_save      
     fi
 
     mkdir -p "$PATH_ETHIC_HOME"
