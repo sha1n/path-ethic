@@ -21,19 +21,23 @@ function __pe_help() {
 
 Available Command: 
 
-  peth [show]        - shows the effective PATH and your current session settings
-  peth list          - lists all effective PATH elements in the current session
-  peth push <path>   - pushs an element to the begining of the current session PATH
-  peth append <path> - appends an element to the end of the current session PATH
-  peth rm <path>     - finds and removes an element from the session PATH
-  peth flip          - flips the order of your set prefix and suffix in the current session
-  peth reset         - strips any set prefix and suffix from the current session PATH
-  peth save [name]   - saves the current session settings to disk for later recall. If the optional name argument is provided settings are saved as a preset under that name
-  peth load [name]   - loads previously saved settings into the current session. If a name argument is provided attempts to load a saved preset
-  peth rmp [name]    - removes a previously saved preset
-  peth listp         - lists all saved presets
-  peth update        - updates the plugin from github
-  peth help          - displays this help message
+  show          - shows the effective PATH and your current session settings
+  list          - lists all effective PATH elements in the current session
+  push <path>   - pushs an element to the begining of the current session PATH
+  append <path> - appends an element to the end of the current session PATH
+  rm <path>     - finds and removes an element from the session PATH
+  flip          - flips the order of your set prefix and suffix in the current 
+                  session
+  reset         - strips any set prefix and suffix from the current session PATH
+  save [name]   - saves the current session settings to disk for later recall
+                  If the optional name argument is provided settings are saved 
+                  as a preset under that name
+  load [name]   - loads previously saved settings into the current session
+                  If a name argument is provided attempts to load a saved preset
+  rmp [name]    - removes a previously saved preset
+  listp         - lists all saved presets
+  update        - updates the plugin from github
+  help          - displays this help message
 
 
  path-ethic on Github: https://github.com/sha1n/path-ethic
@@ -160,5 +164,6 @@ function load_path_ethic() {
 }
 
 
-# register a pre-command hook to automatically load committed data before the first command is executed.
+# register a pre-command hook to automatically load committed data before the 
+# first command is executed.
 add-zsh-hook precmd load_path_ethic
