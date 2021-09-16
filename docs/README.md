@@ -1,7 +1,8 @@
 [![ci](https://github.com/sha1n/path-ethic/actions/workflows/ci.yml/badge.svg)](https://github.com/sha1n/path-ethic/actions/workflows/ci.yml)
 
 - [path-ethic](#path-ethic)
-  - [CLI Commands](#cli-commands)
+- [CLI Commands](#cli-commands)
+  - [Path Editing Commands](#path-editing-commands)
     - [peth list](#peth-list)
     - [peth show](#peth-show)
     - [peth push](#peth-push)
@@ -9,8 +10,12 @@
     - [peth flip](#peth-flip)
     - [peth rm](#peth-rm)
     - [peth reset](#peth-reset)
+  - [Preset Management Commands](#preset-management-commands)
     - [peth save (previously 'commit')](#peth-save-previously-commit)
     - [peth load (previously 'reload')](#peth-load-previously-reload)
+    - [peth listp](#peth-listp)
+    - [peth rmp](#peth-rmp)
+  - [Other Commands](#other-commands)
     - [peth update](#peth-update)
     - [peth help](#peth-help)
   - [How to Install](#how-to-install)
@@ -28,7 +33,8 @@
 - scripting friendly
 
 
-## CLI Commands
+# CLI Commands
+## Path Editing Commands 
 ### peth list
 `peth list` - similar to `show` but lists elements in separate lines.
 
@@ -59,6 +65,7 @@
 ### peth reset
 `peth reset` - removes all prefixes and suffixes and re-exports the original `PATH`.
 
+## Preset Management Commands 
 ### peth save (previously 'commit')
 `peth save [save]` - saves the current session settings to disk for later recall. If the optional name argument is provided, settings are saved as a preset under that name.
 
@@ -68,6 +75,13 @@
 ### peth load (previously 'reload')
 `peth load [name]` - loads previously saved settings into the current session. If the optional name argument is provided, attempts to load a named preset.
 
+### peth listp
+`peth listp` - lists all saved presets
+
+### peth rmp
+`peth rmp <name>` - removes a previously saved preset
+
+## Other Commands
 ### peth update
 `peth update` - if cloned from a remote git repository, prompts to pull the latest changes from that remote.
 

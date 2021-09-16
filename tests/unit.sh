@@ -57,9 +57,21 @@ Actual: '$1'
 }
 
 function assert_preset_exists() {
-  local expected_path="$HOME/.path-ethic/$1"
+  local expected_path="$HOME/.path-ethic/$1.preset"
   if [[ ! -f "$expected_path" ]]; then
     print "PRESET FILE NOT FOUND!
+
+Path: '$expected_path'
+"
+
+    exit 1
+  fi
+}
+
+function assert_preset_doesnt_exists() {
+  local expected_path="$HOME/.path-ethic/$1.preset"
+  if [[ -f "$expected_path" ]]; then
+    print "PRESET FILE EXISTS!
 
 Path: '$expected_path'
 "
