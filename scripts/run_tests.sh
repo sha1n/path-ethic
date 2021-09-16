@@ -1,30 +1,33 @@
 #!/usr/bin/env zsh
+autoload -U colors && colors
 
-TESTS="$(find . -type f -name "*.test.sh")"
 EXIT_CODE=0
+local script_dir=${0:a:h}
+local tests_dir="$script_dir/../tests"
 
-run_tests() {
-  
-  for test in $TESTS; 
-  do
-    echo $test
-    printf "Running test: %s...\n" $test
-    
-    ( eval zsh $test 2>&1 )
+function run_tests() {
+  for test in $(find $tests_dir -type f -mtime -14 -iname '*.test.sh' | awk -F/ '{print $NF}'); do
+    printf "
+
+ > $TEST: %s
+
+" $test
+
+    (eval $tests_dir/$test 2>&1)
     local exitcode="$?"
 
     if [ "$exitcode" != "0" ]; then
       EXIT_CODE=1
-      print "$fg[red]FAILED!\n"
+      print "\n > $fg[red]FAILED!$reset_color\n"
     else
-      print "$fg[green]PASSED!\n"
-    fi    
+      print "\n > $fg[green]PASSED!$reset_color\n"
+    fi
+    printf "%-50s\n" | tr ' ' '-'
   done
 
   if [ "$EXIT_CODE" != "0" ]; then
+    print "$fg[red]FAILURE!$reset_color"
     exit $EXIT_CODE
-  else
-    exit 0
   fi
 }
 
