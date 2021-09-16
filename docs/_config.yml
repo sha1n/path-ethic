@@ -1,0 +1,7 @@
+theme: jekyll-theme-cayman
+
+plugins:
+  - jekyll-sitemap
+
+title: path-ethic
+description: An oh-my-zsh path manipulation utility plugin
