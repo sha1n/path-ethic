@@ -32,12 +32,12 @@
 ### peth list
 `peth list` - similar to `show` but lists elements in separate lines.
 
-<img src="docs/images/peth-list.png" width="100%">
+<img src="images/peth-list.png" width="100%">
 
 ### peth show
 `peth show` - displays the current value of `PATH` and the values of any set prefix and suffix.
 
-<img src="docs/images/peth-show.png" width="100%">
+<img src="images/peth-show.png" width="100%">
 
 ### peth push
 `peth push <path>` - adds a new element at the beginning of the `PATH` and re-exports.
@@ -50,7 +50,7 @@
 
 <details>
   <summary>Demo</summary>
-  <img src="docs/images/peth-flip-demo.gif" width="100%">
+  <img src="images/peth-flip-demo.gif" width="100%">
 </details>
 
 ### peth rm
@@ -96,3 +96,4 @@ plugins=(
 In order to make committed changes more portable, right before changes are saved all user home paths are replaced with `$HOME`. 
 Therefore, when you migrate settings to a new computer or user on the same computer, you can simply install the plugin, copy `~/.path-ethic` 
 to your new home directory and you should be good to go.
+
