@@ -9,7 +9,7 @@ function run_tests() {
   for test in $(find $tests_dir -type f -mtime -14 -iname '*.test.sh' | awk -F/ '{print $NF}'); do
     printf "
 
- > $TEST: %s
+ > TEST: %s
 
 " $test
 
