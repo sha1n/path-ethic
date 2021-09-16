@@ -7,9 +7,10 @@ source $script_dir/unit.sh
 
 local push_path=$(existing_dir_from $HOME/push)
 local append_path=$(existing_dir_from $HOME/append)
-local committed_push_path=$(existing_dir_from $HOME/committed_push)
-local committed_append_path=$(existing_dir_from $HOME/committed_append)
-local env_file_path="$HOME/.path-ethic"
+local saved_push_path=$(existing_dir_from $HOME/saved_push)
+local saved_append_path=$(existing_dir_from $HOME/saved_append)
+local peth_home="$HOME/.path-ethic"
+local default_preset_path="$peth_home/.default"
 local original_path="$PATH"
 
 if [[ ! -z "$PATH_ETHIC_TAIL" || ! -z "$PATH_ETHIC_HEAD" ]]; then
@@ -17,18 +18,20 @@ if [[ ! -z "$PATH_ETHIC_TAIL" || ! -z "$PATH_ETHIC_HEAD" ]]; then
   exit 1
 fi
 
+mkdir -p "$peth_home"
+
 # load_path_ethic #############################################################
 
 header "load_path_ethic"
 
-echo "export PATH_ETHIC_HEAD=\"\$HOME/committed_push\"" >$env_file_path
-echo "export PATH_ETHIC_TAIL=\"\$HOME/committed_append\"" >>$env_file_path
+echo "PATH_ETHIC_HEAD=\"\$HOME/saved_push\"" >$default_preset_path
+echo "PATH_ETHIC_TAIL=\"\$HOME/saved_append\"" >>$default_preset_path
 
 load_path_ethic
 
-assert_equals $PATH_ETHIC_HEAD "$committed_push_path"
-assert_equals $PATH_ETHIC_TAIL "$committed_append_path"
-assert_equals $PATH "$committed_push_path:$original_path:$committed_append_path"
+assert_equals $PATH_ETHIC_HEAD "$saved_push_path"
+assert_equals $PATH_ETHIC_TAIL "$saved_append_path"
+assert_equals $PATH "$saved_push_path:$original_path:$saved_append_path"
 
 
 # peth list ##################################################################
@@ -93,22 +96,22 @@ assert_equals $PATH_ETHIC_HEAD ""
 assert_equals $PATH_ETHIC_TAIL ""
 assert_equals $PATH $original_path
 
-# peth reload #################################################################
-header "peth reload"
+# peth load #################################################################
+header "peth load"
 
 peth push $push_path
 peth append $append_path
 
-peth reload
+peth load
 
-assert_equals $PATH_ETHIC_HEAD "$committed_push_path"
-assert_equals $PATH_ETHIC_TAIL "$committed_append_path"
-assert_equals $PATH $committed_push_path:$original_path:$committed_append_path
+assert_equals $PATH_ETHIC_HEAD "$saved_push_path"
+assert_equals $PATH_ETHIC_TAIL "$saved_append_path"
+assert_equals $PATH $saved_push_path:$original_path:$saved_append_path
 
-# peth commit #################################################################
-header "peth commit empty"
+# peth save #################################################################
+header "peth save empty"
 
-peth commit
+peth save
 
 load_path_ethic
 
@@ -116,15 +119,35 @@ assert_equals $PATH_ETHIC_HEAD ""
 assert_equals $PATH_ETHIC_TAIL ""
 assert_equals $PATH $original_path
 
-header "peth commit non-empty"
+header "peth save non-empty"
 
 peth push $push_path
 peth append $append_path
 
-peth commit
+peth save
 
 unit_reset
 load_path_ethic
+
+assert_equals $PATH_ETHIC_HEAD $push_path
+assert_equals $PATH_ETHIC_TAIL $append_path
+assert_equals $PATH $push_path:$original_path:$append_path
+
+# peth save/load preset #######################################################
+header "peth save preset"
+
+# reset and save default 
+peth reset
+peth save
+
+# modify and save preset
+peth push $push_path
+peth append $append_path
+peth save my_preset
+
+# reset session and load preset
+peth reset
+peth load my_preset
 
 assert_equals $PATH_ETHIC_HEAD $push_path
 assert_equals $PATH_ETHIC_TAIL $append_path
