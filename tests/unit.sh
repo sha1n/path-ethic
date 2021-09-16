@@ -16,8 +16,8 @@ source $script_dir/../path-ethic.plugin.zsh
 ###############################################################################
 
 function unit_reset() {
-  export PATH_ETHIC_HEAD=""
-  export PATH_ETHIC_TAIL=""
+  PATH_ETHIC_HEAD=""
+  PATH_ETHIC_TAIL=""
   export PATH="$original_path"
 }
 

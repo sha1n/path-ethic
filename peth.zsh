@@ -24,8 +24,8 @@ function __pe_save() {
   local preset_file_name=$(__pe_generate_present_file_name "$preset_name")
   local preset_path="$PATH_ETHIC_HOME/$preset_file_name"
 
-  echo "export PATH_ETHIC_HEAD=$PATH_ETHIC_HEAD" > "$preset_path"
-  echo "export PATH_ETHIC_TAIL=$PATH_ETHIC_TAIL" >> "$preset_path"
+  echo "PATH_ETHIC_HEAD=$PATH_ETHIC_HEAD" > "$preset_path"
+  echo "PATH_ETHIC_TAIL=$PATH_ETHIC_TAIL" >> "$preset_path"
 
   PATH_ETHIC_CURRENT_PRESET_NAME="$preset_name"
 }
@@ -70,21 +70,21 @@ function __pe_list_presets() {
 # Removes any set prefix and suffix and re-exports PATH
 function __pe_reset() {
     local stripped_path=$(__pe_strip_original_path)
-    export PATH_ETHIC_HEAD=
-    export PATH_ETHIC_TAIL=
+    PATH_ETHIC_HEAD=
+    PATH_ETHIC_TAIL=
 
     __pe_reexport_path "$stripped_path"
 }
 
 # Prepends the specified path element re-exports PATH
 function __pe_push() {
-    export PATH_ETHIC_HEAD=$(__pe_normalize_path "$1:$PATH_ETHIC_HEAD")
+    PATH_ETHIC_HEAD=$(__pe_normalize_path "$1:$PATH_ETHIC_HEAD")
     __pe_reexport_path
 }
 
 # Appends the specified path element re-exports PATH
 function __pe_append() {
-    export PATH_ETHIC_TAIL=$(__pe_normalize_path "$PATH_ETHIC_TAIL:$1")
+    PATH_ETHIC_TAIL=$(__pe_normalize_path "$PATH_ETHIC_TAIL:$1")
     __pe_reexport_path
 }
 
@@ -140,8 +140,8 @@ function __pe_remove() {
     local target_path=$(__pe_strip_original_path)
     target_path=$(__pe_filter "$target_path" "$find")
 
-    export PATH_ETHIC_HEAD=$(__pe_filter "$PATH_ETHIC_HEAD" "$find")
-    export PATH_ETHIC_TAIL=$(__pe_filter "$PATH_ETHIC_TAIL" "$find")
+    PATH_ETHIC_HEAD=$(__pe_filter "$PATH_ETHIC_HEAD" "$find")
+    PATH_ETHIC_TAIL=$(__pe_filter "$PATH_ETHIC_TAIL" "$find")
 
     __pe_reexport_path "$target_path"
 }
@@ -181,8 +181,8 @@ function __pe_flip() {
     PATH=$(__pe_strip_original_path)
     
     local tmp=$PATH_ETHIC_HEAD
-    export PATH_ETHIC_HEAD=$PATH_ETHIC_TAIL
-    export PATH_ETHIC_TAIL=$tmp
+    PATH_ETHIC_HEAD=$PATH_ETHIC_TAIL
+    PATH_ETHIC_TAIL=$tmp
 
     __pe_reexport_path
 }
