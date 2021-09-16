@@ -1,0 +1,42 @@
+#
+# This workflow monitors changes in README.md and syncs them with the docs/README.md which serves the generated site.
+#
+name: Sync Site README
+
+on:
+  pull_request:
+    branches: [master]
+    paths:
+      - "README.md"
+
+jobs:
+  sync_site_readme:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - run: |-
+          git fetch --all
+          git checkout ${{ github.event.pull_request.head.ref }} --
+      - name: Sync README
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |-
+          cp README.md docs/README.md
+          # update relative docs urls
+          sed -i 's/(docs\//(/g' docs/README.md
+          sed -i 's/(\/docs\//(\//g' docs/README.md
+          sed -i 's/"\/docs\//"\//g' docs/README.md
+          sed -i 's/src="docs\//src="/g' docs/README.md
+          sed -i 's/src="\/docs\//src="\//g' docs/README.md
+          sed -i 's/href="docs\//href="/g' docs/README.md
+          sed -i 's/href="\/docs\//href="\//g' docs/README.md
+      - name: Commit and push if README changed
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |-
+          git diff
+          git config --global user.email "housekeeping@example.com"
+          git config --global user.name "housekeeping-bot"
+          git diff --quiet || (git add docs/README.md && git commit -m "Synced README")
+          git push -u origin ${{ github.event.pull_request.head.ref }}
