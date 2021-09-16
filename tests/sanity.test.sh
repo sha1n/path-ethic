@@ -24,8 +24,8 @@ mkdir -p "$peth_home"
 
 header "load_path_ethic"
 
-echo "export PATH_ETHIC_HEAD=\"\$HOME/saved_push\"" >$default_preset_path
-echo "export PATH_ETHIC_TAIL=\"\$HOME/saved_append\"" >>$default_preset_path
+echo "PATH_ETHIC_HEAD=\"\$HOME/saved_push\"" >$default_preset_path
+echo "PATH_ETHIC_TAIL=\"\$HOME/saved_append\"" >>$default_preset_path
 
 load_path_ethic
 
