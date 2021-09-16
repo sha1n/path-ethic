@@ -88,11 +88,11 @@ function peth() {
             return
             ;;
         save|commit)
-            __pe_save
+            __pe_save "${@:2}"
             return
             ;;
         load|reload)
-            __pe_load
+            __pe_load "${@:2}"
             return
             ;;
         show)
