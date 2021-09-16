@@ -145,19 +145,19 @@ function load_path_ethic() {
     # remove the hook - it is only needed to run once per session
     add-zsh-hook -d precmd load_path_ethic
 
-    mkdir -p "$PATH_ETHIC_HOME"
-
     # migrate previous version persistent data to latest
-    if [[ -f "$PATH_ETHIC_HOME/.path-ethic" ]]; then
+    if [[ -f "$HOME/.path-ethic" ]]; then
         local new_path=$(__pe_strip_original_path)
-        source "$PATH_ETHIC_HOME/.path-ethic"
+        source "$HOME/.path-ethic"
         export PATH="$(__pe_rebuild_path_with $new_path)"
 
         __pe_save
 
-        rm "$PATH_ETHIC_HOME/.path-ethic"
+        rm "$HOME/.path-ethic"
     fi
 
+    mkdir -p "$PATH_ETHIC_HOME"
+    
     if [[ -f "$PATH_ETHIC_DEFAULT_PRESET_PATH" ]]; then
         __pe_load $PATH_ETHIC_DEFAULT_PRESET_NAME
     fi
