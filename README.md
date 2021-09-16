@@ -1,8 +1,8 @@
 [![ci](https://github.com/sha1n/path-ethic/actions/workflows/ci.yml/badge.svg)](https://github.com/sha1n/path-ethic/actions/workflows/ci.yml)
 
 - [path-ethic](#path-ethic)
-- [CLI Commands](#cli-commands)
-  - [Path Editing Commands](#path-editing-commands)
+- [Commands](#commands)
+  - [Path Editing](#path-editing)
     - [peth list](#peth-list)
     - [peth show](#peth-show)
     - [peth push](#peth-push)
@@ -10,17 +10,19 @@
     - [peth flip](#peth-flip)
     - [peth rm](#peth-rm)
     - [peth reset](#peth-reset)
-  - [Preset Management Commands](#preset-management-commands)
+  - [Preset Management](#preset-management)
     - [peth save (previously 'commit')](#peth-save-previously-commit)
     - [peth load (previously 'reload')](#peth-load-previously-reload)
     - [peth listp](#peth-listp)
     - [peth rmp](#peth-rmp)
-  - [Other Commands](#other-commands)
+  - [Other](#other)
     - [peth update](#peth-update)
     - [peth help](#peth-help)
   - [How to Install](#how-to-install)
   - [How to Uninstall](#how-to-uninstall)
+  - [Installing Completion Functions](#installing-completion-functions)
   - [Migrating Committed Data](#migrating-committed-data)
+
 
 # path-ethic
 `path-ethic` is a Zsh native [oh-my-zsh](https://github.com/ohmyzsh/ohmyzsh) plugin that provides a CLI for `PATH` manipulations and preset management. 
@@ -35,8 +37,8 @@ It does not touch your existing `.zshrc`, `.zprofile` or any other shell environ
 - scripting friendly
 
 
-# CLI Commands
-## Path Editing Commands 
+# Commands
+## Path Editing
 ### peth list
 `peth list` - similar to `show` but lists elements in separate lines.
 
@@ -67,9 +69,9 @@ It does not touch your existing `.zshrc`, `.zprofile` or any other shell environ
 ### peth reset
 `peth reset` - removes all prefixes and suffixes and re-exports the original `PATH`.
 
-## Preset Management Commands 
+## Preset Management
 ### peth save (previously 'commit')
-`peth save [save]` - saves the current session settings to disk for later recall. If the optional name argument is provided, settings are saved as a preset under that name.
+`peth save [name]` - saves the current session settings to disk for later recall. If the optional name argument is provided, settings are saved as a preset under that name.
 
 - Data is saved to `~/.path-ethic` 
 - User home paths are substituted with `$HOME` for better portability
@@ -83,7 +85,7 @@ It does not touch your existing `.zshrc`, `.zprofile` or any other shell environ
 ### peth rmp
 `peth rmp <name>` - removes a previously saved preset
 
-## Other Commands
+## Other
 ### peth update
 `peth update` - if cloned from a remote git repository, prompts to pull the latest changes from that remote.
 
@@ -107,6 +109,16 @@ plugins=(
 1. Reverse the [installation steps](#how-to-install).
 2. You may want to delete the directory `~/.path-ethic`. This is where committed `PATH` elements and presets are saved.
 
+## Installing Completion Functions
+- Add the following to `~/.zshrc`:
+```bash
+# register completion functions for 'path-ethic'
+fpath=($ZSH_CUSTOM/plugins/path-ethic/completion $fpath)
+
+# enable autocomplete functions
+autoload -U compinit
+compinit
+```
 
 ## Migrating Committed Data
 In order to make committed changes more portable, right before changes are saved all user home paths are replaced with `$HOME`. 
