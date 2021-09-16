@@ -9,8 +9,8 @@
     - [peth flip](#peth-flip)
     - [peth rm](#peth-rm)
     - [peth reset](#peth-reset)
-    - [peth commit](#peth-commit)
-    - [peth reload](#peth-reload)
+    - [peth save (previously 'commit')](#peth-save-previously-commit)
+    - [peth load (previously 'reload')](#peth-load-previously-reload)
     - [peth update](#peth-update)
     - [peth help](#peth-help)
   - [How to Install](#how-to-install)
@@ -18,7 +18,14 @@
   - [Migrating Committed Data](#migrating-committed-data)
 
 # path-ethic
-`path-ethic` is a simple native [oh-my-zsh](https://github.com/ohmyzsh/ohmyzsh) plugin that provides a CLI for `PATH` manipulations. It won't touch your existing `.zshrc`, `.zprofile` or any other shell environment configuration, but add on top of your existing environment.
+`path-ethic` is a simple Zsh native [oh-my-zsh](https://github.com/ohmyzsh/ohmyzsh) plugin that provides a CLI for `PATH` manipulations. It won't touch your existing `.zshrc`, `.zprofile` or any other shell environment configuration, but add on top of your existing environment.
+
+
+**Main Features**
+- quick and easy CLI based `PATH` management
+- named `PATH` presets
+- switch between two binary versions quickly
+- scripting friendly
 
 
 ## CLI Commands
@@ -52,14 +59,14 @@
 ### peth reset
 `peth reset` - removes all prefixes and suffixes and re-exports the original `PATH`.
 
-### peth commit 
-`peth commit` - saves any `PATH` edits for later sessions. 
+### peth save (previously 'commit')
+`peth save [save]` - saves the current session settings to disk for later recall. If the optional name argument is provided, settings are saved as a preset under that name.
 
 - Data is saved to `~/.path-ethic` 
 - User home paths are substituted with `$HOME` for better portability
 
-### peth reload
-`peth reload` - reloads previously committed settings and discards any dirty state.
+### peth load (previously 'reload')
+`peth load [name]` - loads previously saved settings into the current session. If the optional name argument is provided, attempts to load a named preset.
 
 ### peth update
 `peth update` - if cloned from a remote git repository, prompts to pull the latest changes from that remote.
@@ -82,7 +89,8 @@ plugins=(
 
 ## How to Uninstall
 1. Reverse the [installation steps](#how-to-install).
-2. You may want to delete the file `~/.path-ethic`. This is where committed `PATH` elements are saved.
+2. You may want to delete the directory `~/.path-ethic`. This is where committed `PATH` elements and presets are saved.
+
 
 ## Migrating Committed Data
 In order to make committed changes more portable, right before changes are saved all user home paths are replaced with `$HOME`. 

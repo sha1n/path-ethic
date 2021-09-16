@@ -38,7 +38,7 @@ function assert_equals() {
 
 Expected: '$2'
 
-Actual: '$1'
+  Actual: '$1'
 "
 
     exit 1
