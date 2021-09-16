@@ -23,8 +23,10 @@
   - [Migrating Committed Data](#migrating-committed-data)
 
 # path-ethic
-`path-ethic` is a simple Zsh native [oh-my-zsh](https://github.com/ohmyzsh/ohmyzsh) plugin that provides a CLI for `PATH` manipulations. It won't touch your existing `.zshrc`, `.zprofile` or any other shell environment configuration, but add on top of your existing environment.
+`path-ethic` is a Zsh native [oh-my-zsh](https://github.com/ohmyzsh/ohmyzsh) plugin that provides a CLI for `PATH` manipulations and preset management. 
+It does not touch your existing `.zshrc`, `.zprofile` or any other shell environment configuration, but add on top of your existing environment.
 
+<img src="images/presets-demo.gif" width="100%">
 
 **Main Features**
 - quick and easy CLI based `PATH` management
