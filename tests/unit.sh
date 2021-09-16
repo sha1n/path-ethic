@@ -1,4 +1,5 @@
 #!/usr/bin/env zsh
+autoload -U colors && colors
 
 local script_dir=${0:a:h}
 local test_home=$(mktemp -d)
@@ -9,9 +10,14 @@ unset PATH_ETHIC_TAIL
 
 # Make sure we don't interact witn the local user home
 export HOME=$test_home
+# setup expected directory structure
+mkdir -p "$HOME/.path-ethic"
 
 # Source the plugin (this won't load the plugin!)
 source $script_dir/../path-ethic.plugin.zsh
+
+# initialize default preset
+peth save
 
 ###############################################################################
 
@@ -21,10 +27,15 @@ function unit_reset() {
   export PATH="$original_path"
 }
 
-function header() {
-  printf " > TESTING: %s...\n" $1
+function before_each() {
+  printf " > CASE:$reset_color %s...\n" "$funcstack[-1]";
   
   unit_reset
+
+  if [[ ! -z "$PATH_ETHIC_TAIL" || ! -z "$PATH_ETHIC_HEAD" ]]; then
+    print "prefix and suffix are expected to be unset at this point"
+    exit 1
+  fi
 }
 
 function existing_dir_from() {
@@ -38,7 +49,7 @@ function assert_equals() {
 
 Expected: '$2'
 
-  Actual: '$1'
+  Actual: '$fg[red]$1$reset_color'
 "
 
     exit 1
@@ -49,7 +60,7 @@ function assert_not_empty() {
   if [[ "$1" == "" ]]; then
     print "EMPTY!
 
-Actual: '$1'
+Actual: '$fg[red]$1$reset_color'
 "
 
     exit 1
