@@ -10,7 +10,7 @@ local append_path=$(existing_dir_from $HOME/append)
 local saved_push_path=$(existing_dir_from $HOME/saved_push)
 local saved_append_path=$(existing_dir_from $HOME/saved_append)
 local peth_home="$HOME/.path-ethic"
-local default_preset_path="$peth_home/.default"
+local default_preset_path="$peth_home/default.preset"
 local original_path="$PATH"
 
 if [[ ! -z "$PATH_ETHIC_TAIL" || ! -z "$PATH_ETHIC_HEAD" ]]; then
@@ -24,8 +24,8 @@ mkdir -p "$peth_home"
 
 header "load_path_ethic"
 
-echo "PATH_ETHIC_HEAD=\"\$HOME/saved_push\"" >$default_preset_path
-echo "PATH_ETHIC_TAIL=\"\$HOME/saved_append\"" >>$default_preset_path
+echo "export PATH_ETHIC_HEAD=\"\$HOME/saved_push\"" >$default_preset_path
+echo "export PATH_ETHIC_TAIL=\"\$HOME/saved_append\"" >>$default_preset_path
 
 load_path_ethic
 
@@ -126,7 +126,7 @@ peth append $append_path
 
 peth save
 
-assert_preset_exists ".default"
+assert_preset_exists "default"
 
 unit_reset
 load_path_ethic
@@ -155,3 +155,58 @@ peth load my_preset
 assert_equals $PATH_ETHIC_HEAD $dir1
 assert_equals $PATH_ETHIC_TAIL $dir2
 assert_equals $PATH $dir1:$original_path:$dir2
+
+# peth rmp ####################################################################
+header "peth rmp non-existing preset"
+
+local dir1=$(mktemp -d)
+local dir2=$(mktemp -d)
+
+# modify and save preset
+peth push $dir1
+peth append $dir2
+
+peth rmp non_existing_preset
+
+# no changes expected
+assert_equals $PATH_ETHIC_HEAD $dir1
+assert_equals $PATH_ETHIC_TAIL $dir2
+assert_equals $PATH $dir1:$original_path:$dir2
+
+
+header "peth rmp loaded preset"
+
+local dir1=$(mktemp -d)
+local dir2=$(mktemp -d)
+
+# modify and save preset
+peth push $dir1
+peth append $dir2
+peth save loaded_preset
+
+assert_preset_exists "loaded_preset"
+
+# reset session and load preset
+peth rmp loaded_preset
+
+assert_preset_exists "loaded_preset"
+assert_equals $PATH_ETHIC_HEAD $dir1
+assert_equals $PATH_ETHIC_TAIL $dir2
+assert_equals $PATH $dir1:$original_path:$dir2
+
+header "peth rmp existing unloaded preset"
+
+local dir1=$(mktemp -d)
+local dir2=$(mktemp -d)
+
+# modify and save preset
+peth push $dir1
+peth append $dir2
+peth save existing_preset
+
+# load default preset
+peth load
+
+peth rmp existing_preset
+
+assert_preset_doesnt_exists "existing_preset"
