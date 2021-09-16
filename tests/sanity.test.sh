@@ -126,6 +126,8 @@ peth append $append_path
 
 peth save
 
+assert_preset_exists ".default"
+
 unit_reset
 load_path_ethic
 
@@ -136,19 +138,20 @@ assert_equals $PATH $push_path:$original_path:$append_path
 # peth save/load preset #######################################################
 header "peth save preset"
 
-# reset and save default 
-peth reset
-peth save
+local dir1=$(mktemp -d)
+local dir2=$(mktemp -d)
 
 # modify and save preset
-peth push $push_path
-peth append $append_path
+peth push $dir1
+peth append $dir2
 peth save my_preset
+
+assert_preset_exists "my_preset"
 
 # reset session and load preset
 peth reset
 peth load my_preset
 
-assert_equals $PATH_ETHIC_HEAD $push_path
-assert_equals $PATH_ETHIC_TAIL $append_path
-assert_equals $PATH $push_path:$original_path:$append_path
+assert_equals $PATH_ETHIC_HEAD $dir1
+assert_equals $PATH_ETHIC_TAIL $dir2
+assert_equals $PATH $dir1:$original_path:$dir2
