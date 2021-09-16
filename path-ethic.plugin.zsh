@@ -4,7 +4,9 @@ autoload -U add-zsh-hook
 local script_dir=${0:a:h}
 
 PATH_ETHIC_HOME="$HOME/.path-ethic"
-PATH_ETHIC_DEFAULT_PRESET_PATH="$PATH_ETHIC_HOME/.default"
+PATH_ETHIC_DEFAULT_PRESET_NAME="default"
+PATH_ETHIC_DEFAULT_PRESET_PATH="$PATH_ETHIC_HOME/$PATH_ETHIC_DEFAULT_PRESET_NAME.preset"
+PATH_ETHIC_CURRENT_PRESET_NAME="$PATH_ETHIC_DEFAULT_PRESET_NAME"
 
 source "$script_dir/lib.zsh"
 source "$script_dir/peth.zsh"
@@ -28,6 +30,8 @@ Available Command:
   peth reset         - strips any set prefix and suffix from the current session PATH
   peth save [name]   - saves the current session settings to disk for later recall. If the optional name argument is provided settings are saved as a preset under that name
   peth load [name]   - loads previously saved settings into the current session. If a name argument is provided attempts to load a saved preset
+  peth rmp [name]    - removes a previously saved preset
+  peth listp         - lists all saved presets
   peth update        - updates the plugin from github
   peth help          - displays this help message
 
@@ -95,6 +99,14 @@ function peth() {
             __pe_load "${@:2}"
             return
             ;;
+        rmp)
+            __pe_remove_preset "${@:2}"
+            return
+            ;;
+        listp)
+            __pe_list_presets
+            return
+            ;;
         show)
             __pe_show
             return
@@ -143,7 +155,7 @@ function load_path_ethic() {
     fi
 
     if [[ -f "$PATH_ETHIC_DEFAULT_PRESET_PATH" ]]; then
-        __pe_load
+        __pe_load $PATH_ETHIC_DEFAULT_PRESET_NAME
     fi
 }
 
