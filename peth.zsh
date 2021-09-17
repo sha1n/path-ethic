@@ -6,7 +6,8 @@ PATH_ETHIC_DEFAULT_PRESET_PATH="$PATH_ETHIC_HOME/$PATH_ETHIC_DEFAULT_PRESET_NAME
 PATH_ETHIC_CURRENT_PRESET_NAME="$PATH_ETHIC_DEFAULT_PRESET_NAME"
 
 source "$script_dir/lib.zsh"
-source "$script_dir/peth-commands.zsh"
+source "$script_dir/peth-edit.zsh"
+source "$script_dir/peth-presets.zsh"
 
 
 # Prints help message
