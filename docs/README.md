@@ -110,7 +110,8 @@ plugins=(
 2. You may want to delete the directory `~/.path-ethic`. This is where committed `PATH` elements and presets are saved.
 
 ## Installing Completion Functions
-- Add the following to `~/.zshrc`:
+Add the following to `~/.zshrc` (in that order)
+
 ```bash
 # register completion functions for 'path-ethic'
 fpath=($ZSH_CUSTOM/plugins/path-ethic/completion $fpath)
