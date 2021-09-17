@@ -21,8 +21,8 @@
   - [Automatic Preset Loading with `.pethrc`](#automatic-preset-loading-with-pethrc)
   - [How to Install](#how-to-install)
   - [How to Uninstall](#how-to-uninstall)
-  - [Installing Completion Functions](#installing-completion-functions)
-  - [Migrating Committed Data](#migrating-committed-data)
+  - [Zsh Completion](#zsh-completion)
+  - [Migrating Persistent Data](#migrating-persistent-data)
 
 
 # PATH Ethic
@@ -99,7 +99,7 @@ when you change directory the plugin looks for a `.pethrc` file in that director
 ## How to Install
 1. Clone this repository to `$ZSH_CUSTOM/plugins/path-ethic`
 ```bash
-mkdir -p "$ZSH_CUSTOM" && git clone git@github.com:sha1n/path-ethics.git "$ZSH_CUSTOM/plugins/path-ethic"
+mkdir -p "$ZSH_CUSTOM/plugins" && git clone git@github.com:sha1n/path-ethics.git "$ZSH_CUSTOM/plugins/path-ethic"
 ```
 2. Enable the plugin by adding `path-ethic` to the plugin list `plugins=()` in `~/.zshrc` .
 ```bash 
@@ -112,19 +112,17 @@ plugins=(
 1. Reverse the [installation steps](#how-to-install).
 2. You may want to delete the directory `~/.path-ethic`. This is where committed `PATH` elements and presets are saved.
 
-## Installing Completion Functions
-Add the following to `~/.zshrc` (in that order)
+## Zsh Completion
+The plugin comes bundled with completion functions that are automatically registered to be loaded if Zsh completion system is enabled.
+If completion doesn't work for the `peth` command, consider adding the following to `.zshrc`.
 
 ```bash
-# register completion functions for 'path-ethic'
-fpath=($ZSH_CUSTOM/plugins/path-ethic/completion $fpath)
-
 # enable autocomplete functions
 autoload -U compinit
 compinit
 ```
 
-## Migrating Committed Data
+## Migrating Persistent Data
 In order to make committed changes more portable, right before changes are saved all user home paths are replaced with `$HOME`. 
 Therefore, when you migrate settings to a new computer or user on the same computer, you can simply install the plugin, copy `~/.path-ethic` 
 to your new home directory and you should be good to go.

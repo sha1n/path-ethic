@@ -23,4 +23,4 @@ function _peth() {
     _describe 'peth' subcmds
 }
 
-_peth
+_peth "$@"
