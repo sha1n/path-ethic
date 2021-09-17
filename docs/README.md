@@ -1,32 +1,32 @@
 [![ci](https://github.com/sha1n/path-ethic/actions/workflows/ci.yml/badge.svg)](https://github.com/sha1n/path-ethic/actions/workflows/ci.yml)
 
-- [path-ethic](#path-ethic)
+- [PATH Ethic](#path-ethic)
 - [Commands](#commands)
   - [Path Editing](#path-editing)
-    - [peth list](#peth-list)
-    - [peth show](#peth-show)
-    - [peth push](#peth-push)
-    - [peth append](#peth-append)
-    - [peth flip](#peth-flip)
-    - [peth rm](#peth-rm)
-    - [peth reset](#peth-reset)
+    - [show](#show)
+    - [list](#list)
+    - [push](#push)
+    - [append](#append)
+    - [flip](#flip)
+    - [rm](#rm)
+    - [reset](#reset)
   - [Preset Management](#preset-management)
-    - [peth save (previously 'commit')](#peth-save-previously-commit)
-    - [peth load (previously 'reload')](#peth-load-previously-reload)
-    - [peth listp](#peth-listp)
-    - [peth rmp](#peth-rmp)
-  - [Other](#other)
-    - [peth update](#peth-update)
-    - [peth help](#peth-help)
+    - [save](#save)
+    - [load](#load)
+    - [listp](#listp)
+    - [rmp](#rmp)
+  - [Other Commands](#other-commands)
+    - [update](#update)
+    - [help](#help)
+  - [Automatic Preset Loading with `.pethrc`](#automatic-preset-loading-with-pethrc)
   - [How to Install](#how-to-install)
   - [How to Uninstall](#how-to-uninstall)
   - [Installing Completion Functions](#installing-completion-functions)
   - [Migrating Committed Data](#migrating-committed-data)
 
 
-# path-ethic
-`path-ethic` is a Zsh native [oh-my-zsh](https://github.com/ohmyzsh/ohmyzsh) plugin that provides a CLI for `PATH` manipulations and preset management. 
-It does not touch your existing `.zshrc`, `.zprofile` or any other shell environment configuration, but add on top of your existing environment.
+# PATH Ethic
+`path-ethic` is a native [oh-my-zsh](https://github.com/ohmyzsh/ohmyzsh) plugin that provides CLI for `PATH` manipulation, `PATH` preset management and automatic per-directory preset loading. It does not touch your existing `.zshrc`, `.zprofile` or any other shell environment configuration, but adds on top of existing environment.
 
 <img src="images/presets-demo.gif" width="100%">
 
@@ -39,23 +39,23 @@ It does not touch your existing `.zshrc`, `.zprofile` or any other shell environ
 
 # Commands
 ## Path Editing
-### peth list
+### show
+`peth [show]` - displays the current value of `PATH` and the values of any set prefix and suffix.
+
+<img src="images/peth-show.png" width="100%">
+
+### list
 `peth list` - similar to `show` but lists elements in separate lines.
 
 <img src="images/peth-list.png" width="100%">
 
-### peth show
-`peth show` - displays the current value of `PATH` and the values of any set prefix and suffix.
-
-<img src="images/peth-show.png" width="100%">
-
-### peth push
+### push
 `peth push <path>` - adds a new element at the beginning of the `PATH` and re-exports.
 
-### peth append
+### append
 `peth append <path>` - adds a new element at the end of the `PATH` and re-exports.
  
-### peth flip
+### flip
 `peth flip` - flips the prefix and suffix to reverse their priority. This is a very handy feature if often need to switch between different verisons of the same software.
 
 <details>
@@ -63,34 +63,37 @@ It does not touch your existing `.zshrc`, `.zprofile` or any other shell environ
   <img src="images/peth-flip-demo.gif" width="100%">
 </details>
 
-### peth rm
+### rm
 `peth rm <path>` - removes a path element from the `PATH` and re-exports. If the removed element is a part of the normal user `PATH`, it is removed only in the current session even if the changes are committed. If you want to edit the `PATH` variable, use the plugin and when you're happy copy the effective path value from the output of `peth show` and export it from your `.zshrc` or wherever you manage exports.
 
-### peth reset
+### reset
 `peth reset` - removes all prefixes and suffixes and re-exports the original `PATH`.
 
 ## Preset Management
-### peth save (previously 'commit')
+### save
 `peth save [name]` - saves the current session settings to disk for later recall. If the optional name argument is provided, settings are saved as a preset under that name.
 
 - Data is saved to `~/.path-ethic` 
 - User home paths are substituted with `$HOME` for better portability
 
-### peth load (previously 'reload')
+### load
 `peth load [name]` - loads previously saved settings into the current session. If the optional name argument is provided, attempts to load a named preset.
 
-### peth listp
+### listp
 `peth listp` - lists all saved presets
 
-### peth rmp
+### rmp
 `peth rmp <name>` - removes a previously saved preset
 
-## Other
-### peth update
+## Other Commands
+### update
 `peth update` - if cloned from a remote git repository, prompts to pull the latest changes from that remote.
 
-### peth help
+### help
 `peth help` - displays help.
+
+## Automatic Preset Loading with `.pethrc`
+when you change directory the plugin looks for a `.pethrc` file in that directory and if one is found it looks for a preset name in that directory. If one is found it is automatically loaded into the session. This is helpful if you need different sets of tools or verisons for different projects. To take adventage of this feature, first [save](#peth-save-previously-commit) a named preset and then just create a `.pethrc` with its name in your project directory.
 
 
 ## How to Install
