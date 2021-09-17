@@ -9,7 +9,6 @@ source "$script_dir/peth.zsh"
 
 ################################################################################
 
-<<<<<<< Updated upstream
 # Prints help message
 function __pe_help() {
     __pe_log "Usage: 
@@ -159,10 +158,8 @@ function load_path_ethic() {
     __pe_load_pethrc
 }
 
-=======
 # Ensure add-zsh-hook is loaded
 autoload -U add-zsh-hook
->>>>>>> Stashed changes
 
 # register completion functions for 'path-ethic'
 fpath=(${0:a:h}/completion $fpath)
