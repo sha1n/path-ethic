@@ -6,24 +6,6 @@ source ${0:a:h}/unit.sh
 
 local original_path="$PATH"
 
-# load_path_ethic #############################################################
-funciton test_load_path_ethic() {
-  before_each
-
-  local default_preset_path="$HOME/.path-ethic/default.preset"
-  local saved_push_path=$(existing_dir_from $HOME/saved_push)
-  local saved_append_path=$(existing_dir_from $HOME/saved_append)
-
-  echo "PATH_ETHIC_HEAD=\"\$HOME/saved_push\"" >$default_preset_path
-  echo "PATH_ETHIC_TAIL=\"\$HOME/saved_append\"" >>$default_preset_path
-
-  load_path_ethic
-
-  assert_equals $PATH_ETHIC_HEAD "$saved_push_path"
-  assert_equals $PATH_ETHIC_TAIL "$saved_append_path"
-  assert_equals $PATH "$saved_push_path:$original_path:$saved_append_path"
-}
-
 # peth list ##################################################################
 function test_path_list() {
   before_each
@@ -114,7 +96,6 @@ function test_peth_rm(){
 # run all tests
 #
 
-test_load_path_ethic
 test_path_list
 test_peth_reset
 test_peth_push
