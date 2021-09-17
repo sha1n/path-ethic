@@ -1,6 +1,3 @@
-# Ensure add-zsh-hook is loaded
-autoload -U add-zsh-hook
-
 local script_dir=${0:a:h}
 
 PATH_ETHIC_HOME="$HOME/.path-ethic"
@@ -8,10 +5,11 @@ PATH_ETHIC_DEFAULT_PRESET_NAME="default"
 PATH_ETHIC_DEFAULT_PRESET_PATH="$PATH_ETHIC_HOME/$PATH_ETHIC_DEFAULT_PRESET_NAME.preset"
 PATH_ETHIC_CURRENT_PRESET_NAME="$PATH_ETHIC_DEFAULT_PRESET_NAME"
 
-source "$script_dir/lib.zsh"
 source "$script_dir/peth.zsh"
 
+################################################################################
 
+<<<<<<< Updated upstream
 # Prints help message
 function __pe_help() {
     __pe_log "Usage: 
@@ -161,18 +159,13 @@ function load_path_ethic() {
     __pe_load_pethrc
 }
 
+=======
+# Ensure add-zsh-hook is loaded
+autoload -U add-zsh-hook
+>>>>>>> Stashed changes
 
-function __pe_load_pethrc() {
-    local tmp=
-    if [[ -f "./.pethrc" ]]; then
-        while read line; do
-            tmp=$(echo -e "${line}" | tr -d '[:space:]')
-            if [[ "$line" != "" ]]; then
-                peth load "$line"
-            fi
-        done <"./.pethrc"
-    fi
-}
+# register completion functions for 'path-ethic'
+fpath=(${0:a:h}/completion $fpath)
 
 # register a change dir hook to automatically load optional .pethrc 
 add-zsh-hook chpwd __pe_load_pethrc
