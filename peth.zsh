@@ -1,210 +1,178 @@
 local script_dir=${0:a:h}
+
+PATH_ETHIC_HOME="$HOME/.path-ethic"
+PATH_ETHIC_DEFAULT_PRESET_NAME="default"
+PATH_ETHIC_DEFAULT_PRESET_PATH="$PATH_ETHIC_HOME/$PATH_ETHIC_DEFAULT_PRESET_NAME.preset"
+PATH_ETHIC_CURRENT_PRESET_NAME="$PATH_ETHIC_DEFAULT_PRESET_NAME"
+
 source "$script_dir/lib.zsh"
+source "$script_dir/peth-commands.zsh"
 
-# Loads a saved preset from disk
-function __pe_load() {
-  local preset_name=$(__pe_preset_name_from "$1")
-  local preset_file_name=$(__pe_generate_present_file_name "$preset_name")
-  local preset_path="$PATH_ETHIC_HOME/$preset_file_name"
 
-  if [ -f "$preset_path" ]; then
-    __pe_reset
-    source "$preset_path"
-    __pe_reexport_path
+# Prints help message
+function __pe_help() {
+    __pe_log "Usage: 
+  peth [command] 
+  peth command [arguments]
 
-    PATH_ETHIC_CURRENT_PRESET_NAME="$preset_name"
-  else 
-    __pe_log_warning "preset file '$preset_path' does not exist"
-  fi
+
+Available Command: 
+
+  show          - shows the effective PATH and your current session settings
+  list          - lists all effective PATH elements in the current session
+  push <path>   - pushs an element to the begining of the current session PATH
+  append <path> - appends an element to the end of the current session PATH
+  rm <path>     - finds and removes an element from the session PATH
+  flip          - flips the order of your set prefix and suffix in the current 
+                  session
+  reset         - strips any set prefix and suffix from the current session PATH
+  save [name]   - saves the current session settings to disk for later recall
+                  If the optional name argument is provided settings are saved 
+                  as a preset under that name
+  load [name]   - loads previously saved settings into the current session
+                  If a name argument is provided attempts to load a saved preset
+  rmp [name]    - removes a previously saved preset
+  listp         - lists all saved presets
+  update        - updates the plugin from github
+  help          - displays this help message
+
+
+ path-ethic on Github: https://github.com/sha1n/path-ethic
+  Oh-My-Zsh on Github: https://github.com/ohmyzsh/ohmyzsh
+"
 }
 
-# Saves or overwrites a preset to disk
-function __pe_save() {
-  local preset_name=$(__pe_preset_name_from "$1")
-  local preset_file_name=$(__pe_generate_present_file_name "$preset_name")
-  local preset_path="$PATH_ETHIC_HOME/$preset_file_name"
-
-  echo "PATH_ETHIC_HEAD=$PATH_ETHIC_HEAD" > "$preset_path"
-  echo "PATH_ETHIC_TAIL=$PATH_ETHIC_TAIL" >> "$preset_path"
-
-  PATH_ETHIC_CURRENT_PRESET_NAME="$preset_name"
-}
-
-# Removes a saved preset from disk
-function __pe_remove_preset() {
-  if [[ "$1" == "$PATH_ETHIC_CURRENT_PRESET_NAME" ]]; then
-      __pe_log_error "can't remove a loaded preset!"
-      __pe_log "please use 'path load [name]' to load another preset first"
-      
-      return;
-  fi
-
-  local preset_file_path=$(__pe_present_file_path_from "$1")
-  if [[ ! -f "$preset_file_path" ]]; then
-    __pe_log_warning "preset file '$1' does not exist"
-  else 
-    if [[ "$1" == "$PATH_ETHIC_DEFAULT_PRESET_NAME" ]]; then
-      if read -q "REPLY?Are you sure you want to delete the default preset? [Y/n]: "; then
-        rm "$preset_file_path"
-      fi
-    else
-      rm "$preset_file_path"
+# Attempts to run self update
+function __pe_self_update() {
+    if ! __pe_is_directory "$script_dir/.git"; then 
+        __pe_log_error "The plugin directory is not a git clone"
+        __pe_log_error "Update failed!"
+        
+        return;
     fi
-  fi 
-}
+    
+    if read -q "REPLY?Do you want to update 'path-ethic' to the latest version? [Y/n]: "; then
+        __pe_log "\nPulling latest changes from remote repository..."
 
-# Lists saves presets
-function __pe_list_presets() {
-  for file in $(find $PATH_ETHIC_HOME -type f -mtime -14 -iname '*.preset' -maxdepth 1 | awk -F/ '{print $NF}' | sort); 
-  do
-    local name="${file#"$PATH_ETHIC_HOME/"}"
-    name="${name%.preset}"
-    if [[ "$name" == "$PATH_ETHIC_CURRENT_PRESET_NAME" ]]; then
-        echo " $fg[magenta]➤$reset_color $name"
+        if git -C "$script_dir" pull origin master; then
+            __pe_log "Update successful!"
+        else 
+            __pe_log_error "Update failed!"
+        fi
+
     else
-        echo "   $name"
-    fi
-  done
+        __pe_log "\nUpdate cancelled"
+    fi    
 }
 
-# Removes any set prefix and suffix and re-exports PATH
-function __pe_reset() {
-    local stripped_path=$(__pe_strip_original_path)
-    PATH_ETHIC_HEAD=
-    PATH_ETHIC_TAIL=
-
-    __pe_reexport_path "$stripped_path"
-}
-
-# Prepends the specified path element re-exports PATH
-function __pe_push() {
-    PATH_ETHIC_HEAD=$(__pe_normalize_path "$1:$PATH_ETHIC_HEAD")
-    __pe_reexport_path
-}
-
-# Appends the specified path element re-exports PATH
-function __pe_append() {
-    PATH_ETHIC_TAIL=$(__pe_normalize_path "$PATH_ETHIC_TAIL:$1")
-    __pe_reexport_path
-}
-
-function __pe_add_path_element() {
-    if [[ "$2" == "" ]]; then
-        __pe_log_error "please provide a path to append to PATH"
-        __pe_help
+# Main command interpreter and dispatcher function
+function peth() {
+    if [[ "$#" == "0" ]]; then
+        __pe_show
         return
     fi
 
-    if __pe_is_directory $2 ; then 
-        if [[ "$1" == "push" ]]; then
-        
-            __pe_push "$2"
-        
-        elif [[ "$1" == "append" ]]; then
-        
-            __pe_append "$2"
-        
-        else
-            __pe_log_error "unsupported add command '$1'"
-        fi
-    else
-        __pe_log_error "path '$2' doesn't exist"
-    fi
-}
+    while [[ $# -gt 0 ]]; do
+        command="$1"
 
-function __pe_filter() {
-    local elements=("${(s/:/)1}")
-    local match="$2"
-    local out=
-
-    for e in "${elements[@]}"
-    do
-        if [[ "$e" != "$match" ]]; then
-            out="$out:$e"
-        fi
+        case $command in
+        push)
+            __pe_add_path_element "push" "${@:2}"
+            return
+            ;;
+        append)
+            __pe_add_path_element "append" "${@:2}"
+            return
+            ;;
+        rm)
+            __pe_remove "${@:2}"
+            return
+            ;;
+        reset)
+            __pe_reset
+            return
+            ;;
+        save|commit)
+            __pe_save "${@:2}"
+            return
+            ;;
+        load|reload)
+            __pe_load "${@:2}"
+            return
+            ;;
+        rmp)
+            __pe_remove_preset "${@:2}"
+            return
+            ;;
+        listp)
+            __pe_list_presets
+            return
+            ;;
+        show)
+            __pe_show
+            return
+            ;;
+        list)
+            __pe_list
+            return
+            ;;
+        flip)
+            __pe_flip
+            return
+            ;;
+        update)
+            __pe_self_update
+            return
+            ;;
+        help)
+            __pe_help
+            return
+            ;;
+        *) # ignore unknown
+            __pe_log_error "unsupported command: '$@'"
+            __pe_help
+            return
+            ;;
+        esac
     done
-
-    echo $(__pe_normalize_path "$out")
 }
 
-# Searches for the specified element in the current PATH and removes it if found
-function __pe_remove() {
-    if [[ "$1" == "" ]]; then
-        __pe_log_error "please provide a path to remove from PATH"
-        __pe_help
-        return
+# Loads user commited path prefix/suffix and re-exports the shell PATH.
+function load_path_ethic() {
+    # remove the hook - it is only needed to run once per session
+    add-zsh-hook -d precmd load_path_ethic
+
+    # migrate previous version persistent data to latest
+    if [[ -f "$HOME/.path-ethic" ]]; then
+        local new_path=$(__pe_strip_original_path)
+        source "$HOME/.path-ethic"
+        export PATH="$(__pe_rebuild_path_with $new_path)"
+        
+        rm "$HOME/.path-ethic"
+        mkdir -p "$PATH_ETHIC_HOME"
+
+        __pe_save      
     fi
 
-    local find="$1"
-
-    local target_path=$(__pe_strip_original_path)
-    target_path=$(__pe_filter "$target_path" "$find")
-
-    PATH_ETHIC_HEAD=$(__pe_filter "$PATH_ETHIC_HEAD" "$find")
-    PATH_ETHIC_TAIL=$(__pe_filter "$PATH_ETHIC_TAIL" "$find")
-
-    __pe_reexport_path "$target_path"
-}
-
-# Shows the current path elements
-function __pe_show() {
-    echo "effective ➤ $fg[magenta]$PATH$reset_color
-   prefix ➤ $fg[green]$PATH_ETHIC_HEAD$reset_color
-   suffix ➤ $fg[blue]$PATH_ETHIC_TAIL$reset_color"
-}
-
-# Lists all path elements
-function __pe_list() {
-    if [[ "$PATH_ETHIC_HEAD" != "" ]]; then
-        for e in "${"${(s/:/)PATH_ETHIC_HEAD}"[@]}" 
-        do
-            echo "$fg[green]$e$reset_color"
-        done
-    fi
+    mkdir -p "$PATH_ETHIC_HOME"
     
-    local orig=$(__pe_strip_original_path)
-    for e in "${"${(s/:/)orig}"[@]}" 
-    do
-        echo "$e"
-    done
-
-    if [[ "$PATH_ETHIC_TAIL" != "" ]]; then
-        for e in "${"${(s/:/)PATH_ETHIC_TAIL}"[@]}" 
-        do
-            echo "$fg[blue]$e$reset_color"
-        done
+    if [[ -f "$PATH_ETHIC_DEFAULT_PRESET_PATH" ]]; then
+        __pe_load $PATH_ETHIC_DEFAULT_PRESET_NAME
     fi
+
+    # this covers .pethrc in ~
+    __pe_load_pethrc
 }
 
-# Flips the prefix and suffix to change elements priority
-function __pe_flip() {
-    PATH=$(__pe_strip_original_path)
-    
-    local tmp=$PATH_ETHIC_HEAD
-    PATH_ETHIC_HEAD=$PATH_ETHIC_TAIL
-    PATH_ETHIC_TAIL=$tmp
 
-    __pe_reexport_path
-}
-
-function __pe_preset_name_from() {
-  local preset_name="$PATH_ETHIC_DEFAULT_PRESET_NAME"
-  if [[ "$1" == "" ]]; then
-    preset_name="$PATH_ETHIC_DEFAULT_PRESET_NAME"
-  else 
-    preset_name="$1"
-  fi
-
-  echo "$preset_name"
-}
-
-function __pe_present_file_path_from() {
-  local preset_name=$(__pe_preset_name_from "$1")
-  local preset_file_name=$(__pe_generate_present_file_name "$preset_name")
-  
-  echo "$PATH_ETHIC_HOME/$preset_file_name"
-}
-
-function __pe_generate_present_file_name() {
-    echo "$1.preset"
+function __pe_load_pethrc() {
+    local tmp=
+    if [[ -f "./.pethrc" ]]; then
+        while read line; do
+            tmp=$(echo -e "${line}" | tr -d '[:space:]')
+            if [[ "$line" != "" ]]; then
+                peth load "$line"
+            fi
+        done <"./.pethrc"
+    fi
 }
