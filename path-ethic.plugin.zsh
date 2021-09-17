@@ -162,8 +162,26 @@ function load_path_ethic() {
     if [[ -f "$PATH_ETHIC_DEFAULT_PRESET_PATH" ]]; then
         __pe_load $PATH_ETHIC_DEFAULT_PRESET_NAME
     fi
+
+    # this covers .pethrc in ~
+    __pe_load_pethrc
 }
 
+
+function __pe_load_pethrc() {
+    local tmp=
+    if [[ -f "./.pethrc" ]]; then
+        while read line; do
+            tmp=$(echo -e "${line}" | tr -d '[:space:]')
+            if [[ "$line" != "" ]]; then
+                peth load "$line"
+            fi
+        done <"./.pethrc"
+    fi
+}
+
+# register a change dir hook to automatically load optional .pethrc 
+add-zsh-hook chpwd __pe_load_pethrc
 
 # register a pre-command hook to automatically load committed data before the 
 # first command is executed.
