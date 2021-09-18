@@ -28,8 +28,8 @@ function unit_reset() {
 }
 
 function before_each() {
-  printf " > CASE:$reset_color %s...\n" "$funcstack[-1]";
-  
+  printf " > CASE:$reset_color %s...\n" "$funcstack[-1]"
+
   unit_reset
 
   if [[ ! -z "$PATH_ETHIC_TAIL" || ! -z "$PATH_ETHIC_HEAD" ]]; then
