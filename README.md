@@ -134,4 +134,3 @@ plugins=(
 In order to make committed changes more portable, right before changes are saved all user home paths are replaced with `$HOME`. 
 Therefore, when you migrate settings to a new computer or user on the same computer, you can simply install the plugin, copy `~/.path-ethic` 
 to your new home directory and you should be good to go.
-
