@@ -4,7 +4,7 @@ PATH_ETHIC_HOME="$HOME/.path-ethic"
 PATH_ETHIC_DEFAULT_PRESET_NAME="default"
 PATH_ETHIC_DEFAULT_PRESET_PATH="$PATH_ETHIC_HOME/$PATH_ETHIC_DEFAULT_PRESET_NAME.preset"
 PATH_ETHIC_CURRENT_PRESET_NAME="$PATH_ETHIC_DEFAULT_PRESET_NAME"
-PATH_ETHIC_DEFAULT_PATH=""  # see load_path_ethic
+PATH_ETHIC_DEFAULT_PATH="" # see load_path_ethic
 
 source "$script_dir/lib.zsh"
 source "$script_dir/peth-edit.zsh"
@@ -52,17 +52,11 @@ function __pe_self_update() {
         return
     fi
 
-    if read -q "REPLY?Do you want to update 'path-ethic' to the latest version? [Y/n]: "; then
-        __pe_log "\nPulling latest changes from remote repository..."
-
-        if git -C "$script_dir" pull origin master; then
-            __pe_log "Update successful!"
-        else
-            __pe_log_error "Update failed!"
-        fi
-
+    __pe_log "\nPulling latest changes from remote repository..."
+    if git -C "$script_dir" pull origin master; then
+        __pe_log "Update successful!"
     else
-        __pe_log "\nUpdate cancelled"
+        __pe_log_error "Update failed!"
     fi
 }
 
