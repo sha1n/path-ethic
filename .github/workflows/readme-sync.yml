@@ -4,6 +4,10 @@
 name: Sync Site README
 
 on:
+  push:
+    branches: [master]
+    paths:
+      - "README.md"
   pull_request:
     branches: [master]
     paths:
