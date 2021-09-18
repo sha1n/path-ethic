@@ -10,7 +10,7 @@ local original_path="$PATH"
 function test_path_list() {
   before_each
 
-  local listed_path=$(peth list |  tr '\n' ':' | rev | cut -c2- | rev)
+  local listed_path=$(peth list | tr '\n' ':' | rev | cut -c2- | rev)
 
   assert_not_empty "$listed_path"
   assert_equals $listed_path $PATH
@@ -75,7 +75,7 @@ function test_peth_flip() {
 }
 
 # peth rm #####################################################################
-function test_peth_rm(){
+function test_peth_rm() {
   before_each
 
   local push_path=$(mktemp -d)

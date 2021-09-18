@@ -1,8 +1,11 @@
 [![ci](https://github.com/sha1n/path-ethic/actions/workflows/ci.yml/badge.svg)](https://github.com/sha1n/path-ethic/actions/workflows/ci.yml)
 
 - [PATH Ethic](#path-ethic)
-- [Commands](#commands)
-  - [Path Editing](#path-editing)
+  - [Main Features](#main-features)
+  - [Limitations](#limitations)
+  - [Alternatives](#alternatives)
+- [Features](#features)
+  - [Path Editing Commands](#path-editing-commands)
     - [show](#show)
     - [list](#list)
     - [push](#push)
@@ -10,7 +13,7 @@
     - [flip](#flip)
     - [rm](#rm)
     - [reset](#reset)
-  - [Preset Management](#preset-management)
+  - [Preset Management Commands](#preset-management-commands)
     - [save](#save)
     - [load](#load)
     - [listp](#listp)
@@ -19,10 +22,10 @@
     - [update](#update)
     - [help](#help)
   - [Automatic Preset Loading with `.pethrc`](#automatic-preset-loading-with-pethrc)
-  - [How to Install](#how-to-install)
-  - [How to Uninstall](#how-to-uninstall)
   - [Zsh Completion](#zsh-completion)
-  - [Migrating Persistent Data](#migrating-persistent-data)
+- [How to Install](#how-to-install)
+- [How to Uninstall](#how-to-uninstall)
+- [Migrating Persistent Data](#migrating-persistent-data)
 
 
 # PATH Ethic
@@ -30,15 +33,21 @@
 
 <img src="docs/images/presets-demo.gif" width="100%">
 
-**Main Features**
+## Main Features
 - quick and easy CLI based `PATH` management
 - named `PATH` presets
 - switch between two binary versions quickly
 - scripting friendly
 
+## Limitations
+- no persistent `PATH` overrides
+- designed to work with Zsh only
 
-# Commands
-## Path Editing
+## Alternatives
+If you are looking for a more comprehensive and advanced shell environment configuration management tool, or something that supports more shells, check out [direnv](https://github.com/direnv/direnv).
+
+# Features
+## Path Editing Commands
 ### show
 `peth [show]` - displays the current value of `PATH` and the values of any set prefix and suffix.
 
@@ -69,7 +78,7 @@
 ### reset
 `peth reset` - removes all prefixes and suffixes and re-exports the original `PATH`.
 
-## Preset Management
+## Preset Management Commands
 ### save
 `peth save [name]` - saves the current session settings to disk for later recall. If the optional name argument is provided, settings are saved as a preset under that name.
 
@@ -93,24 +102,7 @@
 `peth help` - displays help.
 
 ## Automatic Preset Loading with `.pethrc`
-when you change directory the plugin looks for a `.pethrc` file in that directory and if one is found it looks for a preset name in that directory. If one is found it is automatically loaded into the session. This is helpful if you need different sets of tools or verisons for different projects. To take adventage of this feature, first [save](#peth-save-previously-commit) a named preset and then just create a `.pethrc` with its name in your project directory.
-
-
-## How to Install
-1. Clone this repository to `$ZSH_CUSTOM/plugins/path-ethic`
-```bash
-mkdir -p "$ZSH_CUSTOM/plugins" && git clone git@github.com:sha1n/path-ethics.git "$ZSH_CUSTOM/plugins/path-ethic"
-```
-2. Enable the plugin by adding `path-ethic` to the plugin list `plugins=()` in `~/.zshrc` .
-```bash 
-plugins=(
-  path-ethic      # <-- add this
-)
-```
-
-## How to Uninstall
-1. Reverse the [installation steps](#how-to-install).
-2. You may want to delete the directory `~/.path-ethic`. This is where committed `PATH` elements and presets are saved.
+When you change directory the plugin looks for a file named `.pethrc` in the target directory. If one is found, it tries to read a preset name from it and load it into the current session. This is helpful if you need different sets of tools or verisons for different projects. To take adventage of this feature, first [save](#save) a named preset and then just create a `.pethrc` with its name in your project directory.
 
 ## Zsh Completion
 The plugin comes bundled with completion functions that are automatically registered to be loaded if Zsh completion system is enabled.
@@ -122,8 +114,23 @@ autoload -U compinit
 compinit
 ```
 
-## Migrating Persistent Data
+# How to Install
+1. Clone this repository to `$ZSH_CUSTOM/plugins/path-ethic`
+```bash
+mkdir -p "$ZSH_CUSTOM/plugins" && git clone git@github.com:sha1n/path-ethics.git "$ZSH_CUSTOM/plugins/path-ethic"
+```
+2. Enable the plugin by adding `path-ethic` to the plugin list `plugins=()` in `~/.zshrc` .
+```bash 
+plugins=(
+  path-ethic      # <-- add this
+)
+```
+
+# How to Uninstall
+1. Reverse the [installation steps](#how-to-install).
+2. You may want to delete the directory `~/.path-ethic`. This is where committed `PATH` elements and presets are saved.
+
+# Migrating Persistent Data
 In order to make committed changes more portable, right before changes are saved all user home paths are replaced with `$HOME`. 
 Therefore, when you migrate settings to a new computer or user on the same computer, you can simply install the plugin, copy `~/.path-ethic` 
 to your new home directory and you should be good to go.
-

@@ -9,7 +9,6 @@ source "$script_dir/lib.zsh"
 source "$script_dir/peth-edit.zsh"
 source "$script_dir/peth-presets.zsh"
 
-
 # Prints help message
 function __pe_help() {
     __pe_log "Usage: 
@@ -45,25 +44,25 @@ Available Command:
 
 # Attempts to run self update
 function __pe_self_update() {
-    if ! __pe_is_directory "$script_dir/.git"; then 
+    if ! __pe_is_directory "$script_dir/.git"; then
         __pe_log_error "The plugin directory is not a git clone"
         __pe_log_error "Update failed!"
-        
-        return;
+
+        return
     fi
-    
+
     if read -q "REPLY?Do you want to update 'path-ethic' to the latest version? [Y/n]: "; then
         __pe_log "\nPulling latest changes from remote repository..."
 
         if git -C "$script_dir" pull origin master; then
             __pe_log "Update successful!"
-        else 
+        else
             __pe_log_error "Update failed!"
         fi
 
     else
         __pe_log "\nUpdate cancelled"
-    fi    
+    fi
 }
 
 # Main command interpreter and dispatcher function
@@ -93,11 +92,11 @@ function peth() {
             __pe_reset
             return
             ;;
-        save|commit)
+        save | commit)
             __pe_save "${@:2}"
             return
             ;;
-        load|reload)
+        load | reload)
             __pe_load "${@:2}"
             return
             ;;
@@ -148,15 +147,15 @@ function load_path_ethic() {
         local new_path=$(__pe_strip_original_path)
         source "$HOME/.path-ethic"
         export PATH="$(__pe_rebuild_path_with $new_path)"
-        
+
         rm "$HOME/.path-ethic"
         mkdir -p "$PATH_ETHIC_HOME"
 
-        __pe_save      
+        __pe_save
     fi
 
     mkdir -p "$PATH_ETHIC_HOME"
-    
+
     if [[ -f "$PATH_ETHIC_DEFAULT_PRESET_PATH" ]]; then
         __pe_load $PATH_ETHIC_DEFAULT_PRESET_NAME
     fi
@@ -164,7 +163,6 @@ function load_path_ethic() {
     # this covers .pethrc in ~
     __pe_load_pethrc
 }
-
 
 function __pe_load_pethrc() {
     local tmp=
