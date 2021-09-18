@@ -10,7 +10,13 @@ function __pe_load() {
   if [ -f "$preset_path" ]; then
     __pe_reset
     source "$preset_path"
-    __pe_reexport_path
+
+    if [[ "$preset_name" == "$PATH_ETHIC_DEFAULT_PRESET_NAME" ]]; then
+      # When loading the default profile, we always load the user rc set PATH
+      __pe_reexport_path "$PATH_ETHIC_DEFAULT_PATH"
+    else 
+      __pe_reexport_path
+    fi
 
     PATH_ETHIC_CURRENT_PRESET_NAME="$preset_name"
   else
@@ -26,6 +32,11 @@ function __pe_save() {
 
   echo "PATH_ETHIC_HEAD=$PATH_ETHIC_HEAD" >"$preset_path"
   echo "PATH_ETHIC_TAIL=$PATH_ETHIC_TAIL" >>"$preset_path"
+  
+  # We only override the actual PATH in non-default presets
+  if [[ "$preset_name" != $PATH_ETHIC_DEFAULT_PRESET_NAME ]]; then 
+    echo "PATH=$PATH" >>"$preset_path"
+  fi
 
   PATH_ETHIC_CURRENT_PRESET_NAME="$preset_name"
 }

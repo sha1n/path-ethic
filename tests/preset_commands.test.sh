@@ -57,6 +57,44 @@ function test_peth_save_nonempty() {
   assert_equals $PATH $push_path:$original_path:$append_path
 }
 
+function test_peth_save_named_with_path_override() {
+  before_each
+
+  local edited_path=$(mktemp -d)
+  PATH="$edited_path"
+
+  peth save path_override
+
+  assert_preset_exists "path_override"
+
+  unit_reset
+  load_path_ethic
+
+  peth load path_override
+
+  assert_equals $PATH_ETHIC_HEAD ""
+  assert_equals $PATH_ETHIC_TAIL ""
+  assert_equals $PATH $edited_path
+}
+
+function test_peth_save_default_with_path_override() {
+  before_each
+
+  local edited_path=$(mktemp -d)
+  PATH="$edited_path"
+
+  peth save
+
+  unit_reset
+  load_path_ethic
+
+  peth load
+
+  assert_equals $PATH_ETHIC_HEAD ""
+  assert_equals $PATH_ETHIC_TAIL ""
+  assert_equals $PATH $original_path
+}
+
 # peth save/load preset #######################################################
 function test_save_load_preset() {
   before_each
@@ -147,6 +185,8 @@ function test_rmp_existing_unloaded() {
 test_peth_load
 test_peth_save_empty
 test_peth_save_nonempty
+test_peth_save_named_with_path_override
+test_peth_save_default_with_path_override
 test_save_load_preset
 test_rmp_nonexisting
 test_rmp_loaded

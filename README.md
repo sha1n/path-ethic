@@ -35,13 +35,13 @@
 
 ## Main Features
 - quick and easy CLI based `PATH` management
-- named `PATH` presets
-- switch between two binary versions quickly
+- named `PATH` [presets](#preset-management-commands)
+- [automatic](#automatic-preset-loading-with-pethrc) preset loading
 - scripting friendly
 
 ## Limitations
-- no persistent `PATH` overrides
 - designed to work with Zsh only
+- the default preset cannot completely override the shell `PATH`
 
 ## Alternatives
 If you are looking for a more comprehensive and advanced shell environment configuration management tool, or something that supports more shells, check out [direnv](https://github.com/direnv/direnv).
@@ -73,26 +73,29 @@ If you are looking for a more comprehensive and advanced shell environment confi
 </details>
 
 ### rm
-`peth rm <path>` - removes a path element from the `PATH` and re-exports. If the removed element is a part of the normal user `PATH`, it is removed only in the current session even if the changes are committed. If you want to edit the `PATH` variable, use the plugin and when you're happy copy the effective path value from the output of `peth show` and export it from your `.zshrc` or wherever you manage exports.
+`peth rm <path>` - removes a path element from the `PATH` and re-exports.
 
 ### reset
 `peth reset` - removes all prefixes and suffixes and re-exports the original `PATH`.
 
 ## Preset Management Commands
 ### save
-`peth save [name]` - saves the current session settings to disk for later recall. If the optional name argument is provided, settings are saved as a preset under that name.
+`peth save [name]` - saves the current session `PATH` settings as a preset for later recall. If the optional name argument is provided, settings are saved as a named preset, otherwise 
+they are saved to the default preset. The **default** preset is special in the fact that it does not include changes made to the original `PATH` during the session. Instead it only saves 
+the prefix and suffix. This makes it possible to always go back to your current `.zshrc` or `.zprofile` set `PATH` settings and edit from there.
 
 - Data is saved to `~/.path-ethic` 
 - User home paths are substituted with `$HOME` for better portability
 
 ### load
-`peth load [name]` - loads previously saved settings into the current session. If the optional name argument is provided, attempts to load a named preset.
+`peth load [name]` - loads a previously saved preset into the current session. If the optional name argument is provided, attempts to load a named preset, otherwise loads the default
+preset.
 
 ### listp
-`peth listp` - lists all saved presets
+`peth listp` - lists all saved presets with a visual indication regarding which one is currently loaded.
 
 ### rmp
-`peth rmp <name>` - removes a previously saved preset
+`peth rmp <name>` - removes a previously saved named preset.
 
 ## Other Commands
 ### update

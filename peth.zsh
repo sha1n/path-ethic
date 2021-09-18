@@ -4,6 +4,7 @@ PATH_ETHIC_HOME="$HOME/.path-ethic"
 PATH_ETHIC_DEFAULT_PRESET_NAME="default"
 PATH_ETHIC_DEFAULT_PRESET_PATH="$PATH_ETHIC_HOME/$PATH_ETHIC_DEFAULT_PRESET_NAME.preset"
 PATH_ETHIC_CURRENT_PRESET_NAME="$PATH_ETHIC_DEFAULT_PRESET_NAME"
+PATH_ETHIC_DEFAULT_PATH=""  # see load_path_ethic
 
 source "$script_dir/lib.zsh"
 source "$script_dir/peth-edit.zsh"
@@ -139,6 +140,7 @@ function peth() {
 
 # Loads user commited path prefix/suffix and re-exports the shell PATH.
 function load_path_ethic() {
+    PATH_ETHIC_DEFAULT_PATH="$PATH"
     # remove the hook - it is only needed to run once per session
     add-zsh-hook -d precmd load_path_ethic
 
