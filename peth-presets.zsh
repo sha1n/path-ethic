@@ -66,7 +66,7 @@ function __pe_remove_preset() {
 
 # Lists saves presets
 function __pe_list_presets() {
-  for file in $(find $PATH_ETHIC_HOME -type f -mtime -14 -iname '*.preset' -maxdepth 1 | awk -F/ '{print $NF}' | sort); do
+  for file in $(find $PATH_ETHIC_HOME -type f -iname '*.preset' -maxdepth 1 | awk -F/ '{print $NF}' | sort); do
     local name="${file#"$PATH_ETHIC_HOME/"}"
     name="${name%.preset}"
     if [[ "$name" == "$PATH_ETHIC_CURRENT_PRESET_NAME" ]]; then
