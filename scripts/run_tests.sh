@@ -6,7 +6,7 @@ local script_dir=${0:a:h}
 local tests_dir="$script_dir/../tests"
 
 function run_tests() {
-  for test in $(find $tests_dir -type f -mtime -14 -iname '*.test.sh' | awk -F/ '{print $NF}'); do
+  for test in $(find $tests_dir -type f -iname '*.test.sh' | awk -F/ '{print $NF}'); do
     printf "
 
  > TEST: %s
