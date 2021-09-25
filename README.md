@@ -24,12 +24,13 @@
   - [Automatic Preset Loading with `.pethrc`](#automatic-preset-loading-with-pethrc)
   - [Zsh Completion](#zsh-completion)
 - [How to Install](#how-to-install)
+  - [Install as Oh-My-Zsh plugin](#install-as-oh-my-zsh-plugin)
 - [How to Uninstall](#how-to-uninstall)
 - [Migrating Persistent Data](#migrating-persistent-data)
 
 
 # PATH Ethic
-`path-ethic` is a native [oh-my-zsh](https://github.com/ohmyzsh/ohmyzsh) plugin that provides CLI for `PATH` manipulation, `PATH` preset management and automatic per-directory preset loading. It does not touch your existing `.zshrc`, `.zprofile` or any other shell environment configuration, but adds on top of existing environment.
+`path-ethic` is a native `zsh` plugin that provides CLI for `PATH` manipulation, `PATH` preset management and automatic per-directory preset loading. It does not touch your existing `.zshrc`, `.zprofile` or any other shell environment configuration, but adds on top of existing environment.
 
 <img src="docs/images/presets-demo.gif" width="100%">
 
@@ -118,6 +119,16 @@ compinit
 ```
 
 # How to Install
+1. Clone this repository to a directory of your choice
+```bash
+cd /your-dir
+git clone git@github.com:sha1n/path-ethics.git
+```
+2. Enable the plugin by sourcing it's main script in `~/.zshrc` .
+```bash 
+source /your-dir/path-ethic/path-ethic.plugin.zsh
+```
+## Install as Oh-My-Zsh plugin
 1. Clone this repository to `$ZSH_CUSTOM/plugins/path-ethic`
 ```bash
 mkdir -p "$ZSH_CUSTOM/plugins" && git clone git@github.com:sha1n/path-ethics.git "$ZSH_CUSTOM/plugins/path-ethic"
