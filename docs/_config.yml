@@ -4,4 +4,4 @@ plugins:
   - jekyll-sitemap
 
 title: path-ethic
-description: An oh-my-zsh path manipulation utility plugin
+description: A Zsh plugin for quick PATH editing and switching
