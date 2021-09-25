@@ -1,5 +1,4 @@
-local script_dir=${0:a:h}
-source "$script_dir/lib.zsh"
+source "$PATH_ETHIC_HOME/lib.zsh"
 
 # Removes any set prefix and suffix and re-exports PATH
 function __pe_reset() {
