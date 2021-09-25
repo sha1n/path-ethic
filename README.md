@@ -30,7 +30,7 @@
 
 
 # PATH Ethic
-`path-ethic` is a native `zsh` plugin that provides CLI for `PATH` manipulation, `PATH` preset management and automatic per-directory preset loading. It does not touch your existing `.zshrc`, `.zprofile` or any other shell environment configuration, but adds on top of existing environment.
+`path-ethic` is a native `Zsh` plugin that provides CLI for `PATH` manipulation, preset management and automatic loading. It does not touch your existing `.zshrc`, `.zprofile` or any other shell environment configuration, but adds on top of your existing environment.
 
 <img src="docs/images/presets-demo.gif" width="100%">
 
