@@ -1,11 +1,10 @@
-local script_dir=${0:a:h}
-source "$script_dir/lib.zsh"
+source "$PATH_ETHIC_HOME/lib.zsh"
 
 # Loads a saved preset from disk
 function __pe_load() {
   local preset_name=$(__pe_preset_name_from "$1")
   local preset_file_name=$(__pe_generate_present_file_name "$preset_name")
-  local preset_path="$PATH_ETHIC_HOME/$preset_file_name"
+  local preset_path="$PATH_ETHIC_CONFIG/$preset_file_name"
 
   if [ -f "$preset_path" ]; then
     __pe_reset
@@ -28,7 +27,7 @@ function __pe_load() {
 function __pe_save() {
   local preset_name=$(__pe_preset_name_from "$1")
   local preset_file_name=$(__pe_generate_present_file_name "$preset_name")
-  local preset_path="$PATH_ETHIC_HOME/$preset_file_name"
+  local preset_path="$PATH_ETHIC_CONFIG/$preset_file_name"
 
   echo "PATH_ETHIC_HEAD=$PATH_ETHIC_HEAD" >"$preset_path"
   echo "PATH_ETHIC_TAIL=$PATH_ETHIC_TAIL" >>"$preset_path"
@@ -66,8 +65,8 @@ function __pe_remove_preset() {
 
 # Lists saves presets
 function __pe_list_presets() {
-  for file in $(find $PATH_ETHIC_HOME -type f -iname '*.preset' -maxdepth 1 | awk -F/ '{print $NF}' | sort); do
-    local name="${file#"$PATH_ETHIC_HOME/"}"
+  for file in $(find $PATH_ETHIC_CONFIG -type f -iname '*.preset' -maxdepth 1 | awk -F/ '{print $NF}' | sort); do
+    local name="${file#"$PATH_ETHIC_CONFIG/"}"
     name="${name%.preset}"
     if [[ "$name" == "$PATH_ETHIC_CURRENT_PRESET_NAME" ]]; then
       echo " $fg[magenta]➤$reset_color $name"
@@ -92,7 +91,7 @@ function __pe_present_file_path_from() {
   local preset_name=$(__pe_preset_name_from "$1")
   local preset_file_name=$(__pe_generate_present_file_name "$preset_name")
 
-  echo "$PATH_ETHIC_HOME/$preset_file_name"
+  echo "$PATH_ETHIC_CONFIG/$preset_file_name"
 }
 
 function __pe_generate_present_file_name() {

@@ -1,14 +1,14 @@
-local script_dir=${0:a:h}
+# local script_dir=${0:a:h}
 
-PATH_ETHIC_HOME="$HOME/.path-ethic"
+PATH_ETHIC_CONFIG="$HOME/.path-ethic"
 PATH_ETHIC_DEFAULT_PRESET_NAME="default"
-PATH_ETHIC_DEFAULT_PRESET_PATH="$PATH_ETHIC_HOME/$PATH_ETHIC_DEFAULT_PRESET_NAME.preset"
+PATH_ETHIC_DEFAULT_PRESET_PATH="$PATH_ETHIC_CONFIG/$PATH_ETHIC_DEFAULT_PRESET_NAME.preset"
 PATH_ETHIC_CURRENT_PRESET_NAME="$PATH_ETHIC_DEFAULT_PRESET_NAME"
 PATH_ETHIC_DEFAULT_PATH="" # see load_path_ethic
 
-source "$script_dir/lib.zsh"
-source "$script_dir/peth-edit.zsh"
-source "$script_dir/peth-presets.zsh"
+source "$PATH_ETHIC_HOME/lib.zsh"
+source "$PATH_ETHIC_HOME/peth-edit.zsh"
+source "$PATH_ETHIC_HOME/peth-presets.zsh"
 
 # Prints help message
 function __pe_help() {
@@ -45,7 +45,7 @@ Available Command:
 
 # Attempts to run self update
 function __pe_self_update() {
-    if ! __pe_is_directory "$script_dir/.git"; then
+    if ! __pe_is_directory "$PATH_ETHIC_HOME/.git"; then
         __pe_log_error "The plugin directory is not a git clone"
         __pe_log_error "Update failed!"
 
@@ -53,7 +53,7 @@ function __pe_self_update() {
     fi
 
     __pe_log "\nPulling latest changes from remote repository..."
-    if git -C "$script_dir" pull origin master; then
+    if git -C "$PATH_ETHIC_HOME" pull origin master; then
         __pe_log "Update successful!"
     else
         __pe_log_error "Update failed!"
@@ -145,12 +145,12 @@ function load_path_ethic() {
         export PATH="$(__pe_rebuild_path_with $new_path)"
 
         rm "$HOME/.path-ethic"
-        mkdir -p "$PATH_ETHIC_HOME"
+        mkdir -p "$PATH_ETHIC_CONFIG"
 
         __pe_save
     fi
 
-    mkdir -p "$PATH_ETHIC_HOME"
+    mkdir -p "$PATH_ETHIC_CONFIG"
 
     if [[ -f "$PATH_ETHIC_DEFAULT_PRESET_PATH" ]]; then
         __pe_load $PATH_ETHIC_DEFAULT_PRESET_NAME

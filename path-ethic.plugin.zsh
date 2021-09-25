@@ -1,6 +1,6 @@
-local script_dir=${0:a:h}
+PATH_ETHIC_HOME="${${(%):-%x}:a:h}"
 
-source "$script_dir/peth.zsh"
+source "$PATH_ETHIC_HOME/peth.zsh"
 
 ################################################################################
 
