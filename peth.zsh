@@ -45,7 +45,7 @@ Available Command:
 
 # Attempts to run self update
 function __pe_self_update() {
-    if ! __pe_is_directory "$PATH_ETHIC_HOME/.git"; then
+    if [[ ! -d "$PATH_ETHIC_HOME/.git" ]] && [[ ! -f "$PATH_ETHIC_HOME/.git" ]]; then
         __pe_log_error "The plugin directory is not a git clone"
         __pe_log_error "Update failed!"
 
