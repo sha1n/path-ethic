@@ -19,9 +19,9 @@ funciton test_load_path_ethic() {
 
   load_path_ethic
 
-  assert_equals $PATH_ETHIC_HEAD "$saved_push_path"
-  assert_equals $PATH_ETHIC_TAIL "$saved_append_path"
-  assert_equals $PATH "$saved_push_path:$original_path:$saved_append_path"
+  assert_equal $PATH_ETHIC_HEAD "$saved_push_path"
+  assert_equal $PATH_ETHIC_TAIL "$saved_append_path"
+  assert_equal $PATH "$saved_push_path:$original_path:$saved_append_path"
 }
 
 # __pe_load_pethrc ############################################################
@@ -42,9 +42,9 @@ funciton test_load_pethrc() {
 
   cd $pethrc_dir
 
-  assert_equals $PATH_ETHIC_HEAD "$pethrc_dir"
-  assert_equals $PATH_ETHIC_TAIL ""
-  assert_equals $PATH "$pethrc_dir:$original_path"
+  assert_equal $PATH_ETHIC_HEAD "$pethrc_dir"
+  assert_equal $PATH_ETHIC_TAIL ""
+  assert_equal $PATH "$pethrc_dir:$original_path"
 
   # back to original directory
   cd "$current_dir"

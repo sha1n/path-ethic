@@ -30,8 +30,11 @@ jobs:
           sudo apt-get update
           sudo apt-get install zsh
 
-      - name: Zsh Vesion
+      - name: Zsh Version
         run: zsh --version
+
+      - name: Update Submodules
+        run: make update_submodules
 
       - name: Run Tests
         run: make test

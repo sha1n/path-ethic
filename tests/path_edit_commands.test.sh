@@ -13,7 +13,7 @@ function test_path_list() {
   local listed_path=$(peth list | tr '\n' ':' | rev | cut -c2- | rev)
 
   assert_not_empty "$listed_path"
-  assert_equals $listed_path $PATH
+  assert_equal $listed_path $PATH
 }
 
 # peth reset ##################################################################
@@ -28,9 +28,9 @@ function test_peth_reset() {
 
   peth reset
 
-  assert_equals $PATH_ETHIC_HEAD ""
-  assert_equals $PATH_ETHIC_TAIL ""
-  assert_equals $PATH $original_path
+  assert_equal $PATH_ETHIC_HEAD ""
+  assert_equal $PATH_ETHIC_TAIL ""
+  assert_equal $PATH $original_path
 }
 
 # peth push ###################################################################
@@ -41,8 +41,8 @@ function test_peth_push() {
 
   peth push $push_path
 
-  assert_equals $PATH_ETHIC_HEAD $push_path
-  assert_equals $PATH_ETHIC_TAIL ""
+  assert_equal $PATH_ETHIC_HEAD $push_path
+  assert_equal $PATH_ETHIC_TAIL ""
 }
 
 # peth append #################################################################
@@ -53,8 +53,8 @@ function test_peth_append() {
 
   peth append $append_path
 
-  assert_equals $PATH_ETHIC_TAIL $append_path
-  assert_equals $PATH_ETHIC_HEAD ""
+  assert_equal $PATH_ETHIC_TAIL $append_path
+  assert_equal $PATH_ETHIC_HEAD ""
 }
 
 # peth flip #####################################################################
@@ -69,9 +69,9 @@ function test_peth_flip() {
 
   peth flip
 
-  assert_equals $PATH_ETHIC_HEAD $append_path
-  assert_equals $PATH_ETHIC_TAIL $push_path
-  assert_equals $PATH $append_path:$original_path:$push_path
+  assert_equal $PATH_ETHIC_HEAD $append_path
+  assert_equal $PATH_ETHIC_TAIL $push_path
+  assert_equal $PATH $append_path:$original_path:$push_path
 }
 
 # peth rm #####################################################################
@@ -87,9 +87,9 @@ function test_peth_rm() {
   peth rm $push_path
   peth rm $append_path
 
-  assert_equals $PATH_ETHIC_HEAD ""
-  assert_equals $PATH_ETHIC_TAIL ""
-  assert_equals $PATH $original_path
+  assert_equal $PATH_ETHIC_HEAD ""
+  assert_equal $PATH_ETHIC_TAIL ""
+  assert_equal $PATH $original_path
 }
 
 #
