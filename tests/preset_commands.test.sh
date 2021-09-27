@@ -18,9 +18,9 @@ function test_peth_load() {
 
   peth load
 
-  assert_equals $PATH_ETHIC_HEAD ""
-  assert_equals $PATH_ETHIC_TAIL ""
-  assert_equals $PATH $original_path
+  assert_equal $PATH_ETHIC_HEAD ""
+  assert_equal $PATH_ETHIC_TAIL ""
+  assert_equal $PATH $original_path
 }
 
 # peth save #################################################################
@@ -31,9 +31,9 @@ function test_peth_save_empty() {
 
   load_path_ethic
 
-  assert_equals $PATH_ETHIC_HEAD ""
-  assert_equals $PATH_ETHIC_TAIL ""
-  assert_equals $PATH $original_path
+  assert_equal $PATH_ETHIC_HEAD ""
+  assert_equal $PATH_ETHIC_TAIL ""
+  assert_equal $PATH $original_path
 }
 
 function test_peth_save_nonempty() {
@@ -52,9 +52,9 @@ function test_peth_save_nonempty() {
   unit_reset
   load_path_ethic
 
-  assert_equals $PATH_ETHIC_HEAD $push_path
-  assert_equals $PATH_ETHIC_TAIL $append_path
-  assert_equals $PATH $push_path:$original_path:$append_path
+  assert_equal $PATH_ETHIC_HEAD $push_path
+  assert_equal $PATH_ETHIC_TAIL $append_path
+  assert_equal $PATH $push_path:$original_path:$append_path
 }
 
 function test_peth_save_named_with_path_override() {
@@ -72,9 +72,9 @@ function test_peth_save_named_with_path_override() {
 
   peth load path_override
 
-  assert_equals $PATH_ETHIC_HEAD ""
-  assert_equals $PATH_ETHIC_TAIL ""
-  assert_equals $PATH $edited_path
+  assert_equal $PATH_ETHIC_HEAD ""
+  assert_equal $PATH_ETHIC_TAIL ""
+  assert_equal $PATH $edited_path
 }
 
 function test_peth_save_default_with_path_override() {
@@ -90,9 +90,9 @@ function test_peth_save_default_with_path_override() {
 
   peth load
 
-  assert_equals $PATH_ETHIC_HEAD ""
-  assert_equals $PATH_ETHIC_TAIL ""
-  assert_equals $PATH $original_path
+  assert_equal $PATH_ETHIC_HEAD ""
+  assert_equal $PATH_ETHIC_TAIL ""
+  assert_equal $PATH $original_path
 }
 
 # peth save/load preset #######################################################
@@ -113,9 +113,9 @@ function test_save_load_preset() {
   peth reset
   peth load my_preset
 
-  assert_equals $PATH_ETHIC_HEAD $dir1
-  assert_equals $PATH_ETHIC_TAIL $dir2
-  assert_equals $PATH $dir1:$original_path:$dir2
+  assert_equal $PATH_ETHIC_HEAD $dir1
+  assert_equal $PATH_ETHIC_TAIL $dir2
+  assert_equal $PATH $dir1:$original_path:$dir2
 }
 
 # peth rmp ####################################################################
@@ -132,9 +132,9 @@ function test_rmp_nonexisting() {
   peth rmp non_existing_preset
 
   # no changes expected
-  assert_equals $PATH_ETHIC_HEAD $dir1
-  assert_equals $PATH_ETHIC_TAIL $dir2
-  assert_equals $PATH $dir1:$original_path:$dir2
+  assert_equal $PATH_ETHIC_HEAD $dir1
+  assert_equal $PATH_ETHIC_TAIL $dir2
+  assert_equal $PATH $dir1:$original_path:$dir2
 }
 
 function test_rmp_loaded() {
@@ -154,9 +154,9 @@ function test_rmp_loaded() {
   peth rmp loaded_preset
 
   assert_preset_exists "loaded_preset"
-  assert_equals $PATH_ETHIC_HEAD $dir1
-  assert_equals $PATH_ETHIC_TAIL $dir2
-  assert_equals $PATH $dir1:$original_path:$dir2
+  assert_equal $PATH_ETHIC_HEAD $dir1
+  assert_equal $PATH_ETHIC_TAIL $dir2
+  assert_equal $PATH $dir1:$original_path:$dir2
 }
 
 function test_rmp_existing_unloaded() {

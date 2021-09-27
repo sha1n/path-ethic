@@ -1,6 +1,9 @@
 #!/usr/bin/env zsh
 autoload -U colors && colors
 
+source "$__ZSH_SCRIPTEST_HOME/matchers.sh"
+source "$__ZSH_SCRIPTEST_HOME/test_util.sh"
+
 local script_dir=${0:a:h}
 local test_home=$(mktemp -d)
 local original_path="$PATH"
@@ -28,7 +31,7 @@ function unit_reset() {
 }
 
 function before_each() {
-  printf " > CASE:$reset_color %s...\n" "$funcstack[-1]"
+  test_case_title
 
   unit_reset
 
@@ -43,50 +46,10 @@ function existing_dir_from() {
   echo "$1"
 }
 
-function assert_equals() {
-  if [[ "$1" != "$2" ]]; then
-    print "NOT EQUAL!
-
-Expected: '$2'
-
-  Actual: '$fg[red]$1$reset_color'
-"
-
-    exit 1
-  fi
-}
-
-function assert_not_empty() {
-  if [[ "$1" == "" ]]; then
-    print "EMPTY!
-
-Actual: '$fg[red]$1$reset_color'
-"
-
-    exit 1
-  fi
-}
-
 function assert_preset_exists() {
-  local expected_path="$HOME/.path-ethic/$1.preset"
-  if [[ ! -f "$expected_path" ]]; then
-    print "PRESET FILE NOT FOUND!
-
-Path: '$expected_path'
-"
-
-    exit 1
-  fi
+  assert_file_exists "$HOME/.path-ethic/$1.preset"
 }
 
 function assert_preset_doesnt_exists() {
-  local expected_path="$HOME/.path-ethic/$1.preset"
-  if [[ -f "$expected_path" ]]; then
-    print "PRESET FILE EXISTS!
-
-Path: '$expected_path'
-"
-
-    exit 1
-  fi
+  assert_file_not_exists "$HOME/.path-ethic/$1.preset"
 }

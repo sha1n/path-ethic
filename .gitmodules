@@ -1,0 +1,3 @@
+[submodule "tests/zsh-scriptest"]
+	path = tests/zsh-scriptest
+	url = git@github.com:sha1n/zsh-scriptest.git
