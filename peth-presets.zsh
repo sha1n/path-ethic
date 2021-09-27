@@ -44,7 +44,7 @@ function __pe_save() {
 function __pe_remove_preset() {
   if [[ "$1" == "$PATH_ETHIC_CURRENT_PRESET_NAME" ]]; then
     __pe_log_error "can't remove a loaded preset!"
-    __pe_log "please use 'path load [name]' to load another preset first"
+    __pe_log "please use 'peth load [name]' to load another preset first"
 
     return
   fi
