@@ -46,7 +46,7 @@ function test_peth_push() {
 
   assert_equal $PATH_ETHIC_HEAD "$push_path2:$push_path1"
   assert_equal $PATH_ETHIC_TAIL ""
-  assert_equal $PATH "$PATH_ETHIC_HEAD:$original_path:$PATH_ETHIC_TAIL"
+  assert_equal $PATH "$PATH_ETHIC_HEAD:$original_path"
 }
 
 # peth append #################################################################
@@ -60,9 +60,9 @@ function test_peth_append() {
   peth append $append_path1
   peth append $append_path2
 
-  assert_equal $PATH_ETHIC_TAIL "$append_path2:$append_path1"
+  assert_equal $PATH_ETHIC_TAIL "$append_path1:$append_path2"
   assert_equal $PATH_ETHIC_HEAD ""
-  assert_equal $PATH "$PATH_ETHIC_HEAD:$original_path:$PATH_ETHIC_TAIL"
+  assert_equal $PATH "$original_path:$PATH_ETHIC_TAIL"
 }
 
 # peth flip #####################################################################
