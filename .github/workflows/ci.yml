@@ -33,8 +33,8 @@ jobs:
       - name: Zsh Version
         run: zsh --version
 
-      - name: Update Submodules
-        run: make update_submodules
+      - name: Initialize Submodules
+        run: make init
 
       - name: Run Tests
         run: make test
