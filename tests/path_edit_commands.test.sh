@@ -37,24 +37,32 @@ function test_peth_reset() {
 function test_peth_push() {
   before_each
 
-  local push_path=$(mktemp -d)
+  local push_path1=$(mktemp -d)
+  local push_path2=$(mktemp -d)
+  local original_path="$PATH"
 
-  peth push $push_path
+  peth push $push_path1
+  peth push $push_path2
 
-  assert_equal $PATH_ETHIC_HEAD $push_path
+  assert_equal $PATH_ETHIC_HEAD "$push_path2:$push_path1"
   assert_equal $PATH_ETHIC_TAIL ""
+  assert_equal $PATH "$PATH_ETHIC_HEAD:$original_path:$PATH_ETHIC_TAIL"
 }
 
 # peth append #################################################################
 function test_peth_append() {
   before_each
 
-  local append_path=$(mktemp -d)
+  local append_path1=$(mktemp -d)
+  local append_path2=$(mktemp -d)
+  local original_path="$PATH"
 
-  peth append $append_path
+  peth append $append_path1
+  peth append $append_path2
 
-  assert_equal $PATH_ETHIC_TAIL $append_path
+  assert_equal $PATH_ETHIC_TAIL "$append_path2:$append_path1"
   assert_equal $PATH_ETHIC_HEAD ""
+  assert_equal $PATH "$PATH_ETHIC_HEAD:$original_path:$PATH_ETHIC_TAIL"
 }
 
 # peth flip #####################################################################
