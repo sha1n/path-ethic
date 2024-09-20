@@ -11,14 +11,18 @@ function __pe_reset() {
 
 # Prepends the specified path element re-exports PATH
 function __pe_push() {
+    local original_path=$(__pe_strip_original_path)
     PATH_ETHIC_HEAD=$(__pe_normalize_path "$1:$PATH_ETHIC_HEAD")
-    __pe_reexport_path
+    
+    __pe_reexport_path "$original_path"
 }
 
 # Appends the specified path element re-exports PATH
 function __pe_append() {
+    local original_path=$(__pe_strip_original_path)
     PATH_ETHIC_TAIL=$(__pe_normalize_path "$PATH_ETHIC_TAIL:$1")
-    __pe_reexport_path
+    
+    __pe_reexport_path "$original_path"
 }
 
 function __pe_add_path_element() {

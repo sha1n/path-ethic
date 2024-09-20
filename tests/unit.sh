@@ -1,4 +1,5 @@
 #!/usr/bin/env zsh
+
 autoload -U colors && colors
 
 source "$__ZSH_SCRIPTEST_HOME/matchers.sh"
