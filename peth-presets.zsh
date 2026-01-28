@@ -3,7 +3,7 @@ source "$PATH_ETHIC_HOME/lib.zsh"
 # Loads a saved preset from disk
 function __pe_load() {
   local preset_name=$(__pe_preset_name_from "$1")
-  local preset_file_name=$(__pe_generate_present_file_name "$preset_name")
+  local preset_file_name=$(__pe_generate_preset_file_name "$preset_name")
   local preset_path="$PATH_ETHIC_CONFIG/$preset_file_name"
 
   if [ -f "$preset_path" ]; then
@@ -26,7 +26,7 @@ function __pe_load() {
 # Saves or overwrites a preset to disk
 function __pe_save() {
   local preset_name=$(__pe_preset_name_from "$1")
-  local preset_file_name=$(__pe_generate_present_file_name "$preset_name")
+  local preset_file_name=$(__pe_generate_preset_file_name "$preset_name")
   local preset_path="$PATH_ETHIC_CONFIG/$preset_file_name"
 
   echo "PATH_ETHIC_HEAD=$PATH_ETHIC_HEAD" >"$preset_path"
@@ -49,7 +49,7 @@ function __pe_remove_preset() {
     return
   fi
 
-  local preset_file_path=$(__pe_present_file_path_from "$1")
+  local preset_file_path=$(__pe_preset_file_path_from "$1")
   if [[ ! -f "$preset_file_path" ]]; then
     __pe_log_warning "preset file '$1' does not exist"
   else
@@ -87,13 +87,13 @@ function __pe_preset_name_from() {
   echo "$preset_name"
 }
 
-function __pe_present_file_path_from() {
+function __pe_preset_file_path_from() {
   local preset_name=$(__pe_preset_name_from "$1")
-  local preset_file_name=$(__pe_generate_present_file_name "$preset_name")
+  local preset_file_name=$(__pe_generate_preset_file_name "$preset_name")
 
   echo "$PATH_ETHIC_CONFIG/$preset_file_name"
 }
 
-function __pe_generate_present_file_name() {
+function __pe_generate_preset_file_name() {
   echo "$1.preset"
 }
