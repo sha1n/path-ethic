@@ -53,7 +53,7 @@ function __pe_self_update() {
     fi
 
     __pe_log "\nPulling latest changes from remote repository..."
-    if git -C "$PATH_ETHIC_HOME" pull origin master; then
+    if git -C "$PATH_ETHIC_HOME" pull --rebase; then
         __pe_log "Update successful!"
     else
         __pe_log_error "Update failed!"

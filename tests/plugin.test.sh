@@ -7,7 +7,7 @@ source ${0:a:h}/unit.sh
 local original_path="$PATH"
 
 # load_path_ethic #############################################################
-funciton test_load_path_ethic() {
+function test_load_path_ethic() {
   before_each
 
   local default_preset_path="$HOME/.path-ethic/default.preset"
@@ -25,7 +25,7 @@ funciton test_load_path_ethic() {
 }
 
 # __pe_load_pethrc ############################################################
-funciton test_load_pethrc() {
+function test_load_pethrc() {
   before_each
 
   local pethrc_dir=$(mktemp -d)
