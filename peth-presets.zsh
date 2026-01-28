@@ -53,12 +53,9 @@ function __pe_remove_preset() {
   if [[ ! -f "$preset_file_path" ]]; then
     __pe_log_warning "preset file '$1' does not exist"
   else
-    if [[ "$1" == "$PATH_ETHIC_DEFAULT_PRESET_NAME" ]]; then
-      if read -q "REPLY?Are you sure you want to delete the default preset? [Y/n]: "; then
-        rm "$preset_file_path"
-      fi
-    else
+    if read -q "REPLY?Are you sure you want to delete preset '$1'? [Y/n]: "; then
       rm "$preset_file_path"
+      __pe_log "\nPreset '$1' removed."
     fi
   fi
 }
@@ -81,7 +78,8 @@ function __pe_preset_name_from() {
   if [[ "$1" == "" ]]; then
     preset_name="$PATH_ETHIC_DEFAULT_PRESET_NAME"
   else
-    preset_name="$1"
+    # Remove any characters that are not alphanumeric, underscore, or hyphen
+    preset_name="${1//[^a-zA-Z0-9_-]/}"
   fi
 
   echo "$preset_name"

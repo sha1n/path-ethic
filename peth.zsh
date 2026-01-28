@@ -146,11 +146,13 @@ function load_path_ethic() {
 
         rm "$HOME/.path-ethic"
         mkdir -p "$PATH_ETHIC_CONFIG"
+    chmod 700 "$PATH_ETHIC_CONFIG"
 
         __pe_save
     fi
 
     mkdir -p "$PATH_ETHIC_CONFIG"
+    chmod 700 "$PATH_ETHIC_CONFIG"
 
     if [[ -f "$PATH_ETHIC_DEFAULT_PRESET_PATH" ]]; then
         __pe_load $PATH_ETHIC_DEFAULT_PRESET_NAME
