@@ -1,8 +1,31 @@
 
 
 function __pe_strip_original_path() {
-    local new_path=${PATH##"$PATH_ETHIC_HEAD"}
-    new_path=${new_path%%"$PATH_ETHIC_TAIL"}
+    local new_path="$PATH"
+    
+    if [[ -n "$PATH_ETHIC_HEAD" ]]; then
+        local temp="${new_path/$PATH_ETHIC_HEAD:/}"
+        if [[ "$temp" == "$new_path" ]]; then
+            temp="${new_path/:$PATH_ETHIC_HEAD/}"
+        fi
+        
+        if [[ "$temp" == "$new_path" && "$new_path" == "$PATH_ETHIC_HEAD" ]]; then
+            temp=""
+        fi
+        new_path="$temp"
+    fi
+
+    if [[ -n "$PATH_ETHIC_TAIL" ]]; then
+        local temp="${new_path/$PATH_ETHIC_TAIL:/}"
+        if [[ "$temp" == "$new_path" ]]; then
+            temp="${new_path/:$PATH_ETHIC_TAIL/}"
+        fi
+        
+        if [[ "$temp" == "$new_path" && "$new_path" == "$PATH_ETHIC_TAIL" ]]; then
+            temp=""
+        fi
+        new_path="$temp"
+    fi
 
     echo $(__pe_normalize_path $new_path)
 }
