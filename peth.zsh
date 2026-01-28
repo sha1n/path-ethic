@@ -21,7 +21,7 @@ Available Command:
 
   show          - shows the effective PATH and your current session settings
   list          - lists all effective PATH elements in the current session
-  push <path>   - pushs an element to the begining of the current session PATH
+  push <path>   - pushes an element to the begining of the current session PATH
   append <path> - appends an element to the end of the current session PATH
   rm <path>     - finds and removes an element from the session PATH
   flip          - flips the order of your set prefix and suffix in the current 
