@@ -29,12 +29,12 @@ function __pe_save() {
   local preset_file_name=$(__pe_generate_preset_file_name "$preset_name")
   local preset_path="$PATH_ETHIC_CONFIG/$preset_file_name"
 
-  echo "PATH_ETHIC_HEAD=$PATH_ETHIC_HEAD" >"$preset_path"
-  echo "PATH_ETHIC_TAIL=$PATH_ETHIC_TAIL" >>"$preset_path"
+  echo "PATH_ETHIC_HEAD=${PATH_ETHIC_HEAD//$HOME/\$HOME}" >"$preset_path"
+  echo "PATH_ETHIC_TAIL=${PATH_ETHIC_TAIL//$HOME/\$HOME}" >>"$preset_path"
   
   # We only override the actual PATH in non-default presets
   if [[ "$preset_name" != $PATH_ETHIC_DEFAULT_PRESET_NAME ]]; then 
-    echo "PATH=$PATH" >>"$preset_path"
+    echo "PATH=${PATH//$HOME/\$HOME}" >>"$preset_path"
   fi
 
   PATH_ETHIC_CURRENT_PRESET_NAME="$preset_name"
