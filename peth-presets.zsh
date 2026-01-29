@@ -53,7 +53,14 @@ function __pe_remove_preset() {
   if [[ ! -f "$preset_file_path" ]]; then
     __pe_log_warning "preset file '$1' does not exist"
   else
-    if read -q "REPLY?Are you sure you want to delete preset '$1'? [Y/n]: "; then
+    local confirmed=0
+    if [[ -n "$PETH_FORCE" ]]; then
+      confirmed=1
+    elif read -q "REPLY?Are you sure you want to delete preset '$1'? [Y/n]: "; then
+      confirmed=1
+    fi
+
+    if [[ $confirmed -eq 1 ]]; then
       rm "$preset_file_path"
       __pe_log "\nPreset '$1' removed."
     fi

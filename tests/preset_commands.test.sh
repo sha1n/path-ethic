@@ -173,7 +173,7 @@ function test_rmp_existing_unloaded() {
   # load default preset
   peth load
 
-  peth rmp existing_preset
+  PETH_FORCE=1 peth rmp existing_preset
 
   assert_preset_doesnt_exists "existing_preset"
 }
