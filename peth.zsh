@@ -146,7 +146,7 @@ function load_path_ethic() {
 
         rm "$HOME/.path-ethic"
         mkdir -p "$PATH_ETHIC_CONFIG"
-    chmod 700 "$PATH_ETHIC_CONFIG"
+        chmod 700 "$PATH_ETHIC_CONFIG"
 
         __pe_save
     fi
