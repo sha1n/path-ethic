@@ -96,7 +96,7 @@ preset.
 `peth listp` - lists all saved presets with a visual indication regarding which one is currently loaded.
 
 ### rmp
-`peth rmp <name>` - removes a previously saved named preset.
+`peth rmp <name>` - removes a previously saved named preset (prompts for confirmation).
 
 ## Other Commands
 ### update
@@ -106,7 +106,7 @@ preset.
 `peth help` - displays help.
 
 ## Automatic Preset Loading with `.pethrc`
-When you change directory the plugin looks for a file named `.pethrc` in the target directory. If one is found, it tries to read a preset name from it and load it into the current session. This is helpful if you need different sets of tools or verisons for different projects. To take adventage of this feature, first [save](#save) a named preset and then just create a `.pethrc` with its name in your project directory.
+When you change directory the plugin looks for a file named `.pethrc` in the target directory. If one is found, it tries to read a preset name from it and load it into the current session. This is helpful if you need different sets of tools or verisons for different projects. To take advantage of this feature, first [save](#save) a named preset and then just create a `.pethrc` with its name in your project directory.
 
 ## Zsh Completion
 The plugin comes bundled with completion functions that are automatically registered to be loaded if Zsh completion system is enabled.
@@ -122,7 +122,7 @@ compinit
 1. Clone this repository to a directory of your choice
 ```bash
 cd /your-dir
-git clone git@github.com:sha1n/path-ethics.git
+git clone git@github.com:sha1n/path-ethic.git
 ```
 2. Enable the plugin by sourcing it's main script in `~/.zshrc` .
 ```bash 
@@ -131,7 +131,7 @@ source /your-dir/path-ethic/path-ethic.plugin.zsh
 ## Install as Oh-My-Zsh plugin
 1. Clone this repository to `$ZSH_CUSTOM/plugins/path-ethic`
 ```bash
-mkdir -p "$ZSH_CUSTOM/plugins" && git clone git@github.com:sha1n/path-ethics.git "$ZSH_CUSTOM/plugins/path-ethic"
+mkdir -p "$ZSH_CUSTOM/plugins" && git clone git@github.com:sha1n/path-ethic.git "$ZSH_CUSTOM/plugins/path-ethic"
 ```
 2. Enable the plugin by adding `path-ethic` to the plugin list `plugins=()` in `~/.zshrc` .
 ```bash 
