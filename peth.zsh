@@ -17,11 +17,11 @@ function __pe_help() {
   peth command [arguments]
 
 
-Available Command: 
+Available Commands: 
 
   show          - shows the effective PATH and your current session settings
   list          - lists all effective PATH elements in the current session
-  push <path>   - pushes an element to the begining of the current session PATH
+  push <path>   - pushes an element to the beginning of the current session PATH
   append <path> - appends an element to the end of the current session PATH
   rm <path>     - finds and removes an element from the session PATH
   flip          - flips the order of your set prefix and suffix in the current 
@@ -32,7 +32,7 @@ Available Command:
                   as a preset under that name
   load [name]   - loads previously saved settings into the current session
                   If a name argument is provided attempts to load a saved preset
-  rmp [name]    - removes a previously saved preset
+  rmp [name]    - removes a previously saved preset (prompts for confirmation)
   listp         - lists all saved presets
   update        - updates the plugin from github
   help          - displays this help message
