@@ -104,8 +104,10 @@ function test_peth_rm() {
 # run all tests
 #
 
-test_path_list
-test_peth_reset
-test_peth_push
-test_peth_append
-test_peth_flip
+run_test test_path_list
+run_test test_peth_reset
+run_test test_peth_push
+run_test test_peth_append
+run_test test_peth_flip
+run_test test_peth_rm
+finish_tests

@@ -55,6 +55,7 @@ funciton test_load_pethrc() {
 # run all tests
 #
 
-test_load_path_ethic
-test_load_pethrc
+run_test test_load_path_ethic
+run_test test_load_pethrc
+finish_tests
 
