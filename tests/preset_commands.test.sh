@@ -182,12 +182,13 @@ function test_rmp_existing_unloaded() {
 # run all tests
 #
 
-test_peth_load
-test_peth_save_empty
-test_peth_save_nonempty
-test_peth_save_named_with_path_override
-test_peth_save_default_with_path_override
-test_save_load_preset
-test_rmp_nonexisting
-test_rmp_loaded
-test_rmp_existing_unloaded
+run_test test_peth_load
+run_test test_peth_save_empty
+run_test test_peth_save_nonempty
+run_test test_peth_save_named_with_path_override
+run_test test_peth_save_default_with_path_override
+run_test test_save_load_preset
+run_test test_rmp_nonexisting
+run_test test_rmp_loaded
+run_test test_rmp_existing_unloaded
+finish_tests
